@@ -19,7 +19,7 @@ Sistem sayesinde kargolar gerçek zamanlı takip edilir, hareket geçmişi kayı
 
 | Birim | Sorumluluk | Ekip Üyeleri |
 |-------|------------|--------------|
-| Proje Yönetimi | Görev dağılımı, sprint planlama | Eslem |
+| Proje Yönetimi | Görev dağılımı, süreç planlama | Eslem |
 | Veritabanı | Kargo, kullanıcı ve yetki şeması | Gulsenem , Atakan |
 | Backend | API geliştirme, business logic | Gulsenem , Atakan |
 | Frontend | Arayüz geliştirme, API entegrasyonu | Miray, Ebrar, Eslem, Eda, Nehir, Zuhal |
