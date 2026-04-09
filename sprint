@@ -1,0 +1,68 @@
+## 1. Hafta: Proje Kurulumu ve Temel Altyapı
+
+###  Hafta Sonu Teslim Edilecekler
+
+|    | Teslim Edilecekler |
+|----|---------------------|
+| 1 | Veritabanı oluşturuldu (users, cargos, cargo_history) |
+| 2 | Proje iskeleti hazır |
+| 3 | Temel sayfa yapısı (navbar, footer) |
+| 4 | Basit API çalışır durumda |
+
+---
+
+###  Backend Görevleri 
+
+| Görev | Detay |
+|-------|-------|
+| Veritabanı kurulumu | PostgreSQL/MySQL kurulumu |
+| Tablo şemaları oluşturma | users, cargos, cargo_history tabloları |
+| Proje iskeleti kurulumu | Express.js/FastAPI başlatma |
+| Klasör yapısı oluşturma | routes/, controllers/, models/, config/ |
+| Veritabanı bağlantısı | ORM (Prisma/TypeORM/SQLAlchemy) kurulumu |
+| Basit API endpoint'i | GET /health → {"status": "ok"} |
+| .gitignore ve .env yapılandırması | Gizli bilgilerin dışarı sızmaması |
+
+
+---
+
+###  Frontend Görevleri 
+
+| Görev | Detay | Sorumlu |
+|-------|-------|---------|
+| Frontend proje kurulumu | React/Vue.js projesi oluşturma |
+| CSS framework entegrasyonu | Tailwind/Bootstrap kurulumu |
+| Navbar bileşeni | Logo, menü bağlantıları  |
+| Footer bileşeni | İletişim, sosyal medya linkleri |
+| Ana sayfa tasarımı | Hoş geldin mesajı, kargo sorgulama butonu |
+| Sayfalar arası routing | React Router kurulumu  |
+| Temel API çağrısı (test) | Backend'deki /health endpoint'ine istek  |
+
+
+---
+
+### 👥 Proje Yönetimi 
+
+| Görev | Açıklama |
+|-------|----------|
+| GitHub repo oluşturma | Repo açma, README oluşturma, ekip üyelerini ekleme |
+| Haftalık toplantı planı | Haftada 2 kez durum değerlendirmesi |
+| Görev takip tablosu | GitHub Projects veya Trello'da görev takibi |
+| İletişim kanalı kurma | WhatsApp/Discord/Teams grubu oluşturma |
+
+---
+
+### 1. Hafta Sonu Kontrol Listesi
+
+| Alan | Yapılacaklar | Tamamlandı mı? |
+|------|--------------|----------------|
+| Backend | Veritabanı oluşturuldu |
+| Backend | Proje iskeleti hazır |
+| Backend | Basit API çalışır durumda  |
+| Frontend | Navbar tamamlandı |
+| Frontend | Footer tamamlandı |
+| Frontend | Temel sayfa yapısı hazır |
+| Frontend | Ana sayfa tasarlandı |
+| Yönetim | GitHub repo oluşturuldu  |
+| Yönetim | Toplantı planı yapıldı |
+| Yönetim | Görevler dağıtıldı |
