@@ -4,7 +4,7 @@
 |----|---------------------|
 | 1 | Admin giriş ekranı |
 | 2 | Yetkilendirme sistemi |
-| 3 | Kargo geçmişi (timeline/tablo) |
+| 3 | Kargo geçmişi  |
 | 4 | Kargo durum güncelleme |
 
 ---
