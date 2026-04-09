@@ -28,8 +28,8 @@
 
 ### Ön Uç Görevleri
 
-| Görev | Detay | Sorumlu |
-|------|------|---------|
+| Görev | Detay  |
+|------|------|
 | Ön uç proje kurulumu | React/Vue.js projesi oluşturma |
 | CSS çerçeve entegrasyonu | Tailwind/Bootstrap kurulumu |
 | Navbar bileşeni | Logo, menü bağlantıları |
@@ -53,5 +53,16 @@
 ---
 
 ### 1. Hafta Sonu Kontrol Listesi
-
+| Alan | Yapılacaklar |
+|-----|-------------|
+| Backend | Veritabanı oluşturuldu |
+| Backend| Proje iskeleti hazır |
+| Backend | Basit API çalışır durumda |
+| Frontend| Navbar tamamlandı |
+| Frontend | Altbilgi tamamlandı |
+| Frontend | Temel sayfa yapısı hazır |
+| Frontend | Ana sayfa tasarlandı |
+| Yönetim | GitHub repo oluşturuldu |
+| Yönetim | Toplantı planı yapıldı |
+| Yönetim | Görevler dağıtıldı |
 
