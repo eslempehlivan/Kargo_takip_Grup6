@@ -11,7 +11,7 @@
 
 ---
 
-### Arka Uç Görevleri
+### Backend Görevleri
 
 | Görev | Detay |
 |------|-------|
@@ -26,11 +26,11 @@
 
 ---
 
-### Ön Uç Görevleri
+### Frontend Görevleri
 
 | Görev | Detay  |
 |------|------|
-| Ön uç proje kurulumu | React/Vue.js projesi oluşturma |
+| Frontend proje kurulumu | React/Vue.js projesi oluşturma |
 | CSS çerçeve entegrasyonu | Tailwind/Bootstrap kurulumu |
 | Navbar bileşeni | Logo, menü bağlantıları |
 | Altbilgi bileşeni | İletişim, sosyal medya bağlantıları |
