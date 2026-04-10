@@ -1,0 +1,156 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|c:\\users\\acer\\desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargokuryeap\u0130\\kargokuryeap\u0130\\controllers\\dtost\\gonderiupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|solutionrelative:kargokuryeap\u0130\\controllers\\dtost\\gonderiupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|c:\\users\\acer\\desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargokuryeap\u0130\\kargokuryeap\u0130\\controllers\\gonderilercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|solutionrelative:kargokuryeap\u0130\\controllers\\gonderilercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|c:\\users\\acer\\desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargokuryeap\u0130\\kargokuryeap\u0130\\controllers\\takipolaylaricontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|solutionrelative:kargokuryeap\u0130\\controllers\\takipolaylaricontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|c:\\users\\acer\\desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargokuryeap\u0130\\kargokuryeap\u0130\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|solutionrelative:kargokuryeap\u0130\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|c:\\users\\acer\\desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargokuryeap\u0130\\kargokuryeap\u0130\\controllers\\dtost\\gondericreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|solutionrelative:kargokuryeap\u0130\\controllers\\dtost\\gondericreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|c:\\users\\acer\\desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargokuryeap\u0130\\kargokuryeap\u0130\\models\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|solutionrelative:kargokuryeap\u0130\\models\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|c:\\users\\acer\\desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargokuryeap\u0130\\kargokuryeap\u0130\\controllers\\dtost\\takipolayicreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|solutionrelative:kargokuryeap\u0130\\controllers\\dtost\\takipolayicreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|c:\\users\\acer\\desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargokuryeap\u0130\\kargokuryeap\u0130\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A1A8380F-0B56-4414-B3CB-773F7C372287}|kargoKuryeAP\u0130\\kargoKuryeAP\u0130.csproj|solutionrelative:kargokuryeap\u0130\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GonderiUpdateDto.cs",
+              "DocumentMoniker": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\Controllers\\Dtost\\GonderiUpdateDto.cs",
+              "RelativeDocumentMoniker": "kargoKuryeAP\u0130\\Controllers\\Dtost\\GonderiUpdateDto.cs",
+              "ToolTip": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\Controllers\\Dtost\\GonderiUpdateDto.cs",
+              "RelativeToolTip": "kargoKuryeAP\u0130\\Controllers\\Dtost\\GonderiUpdateDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T20:20:35.798Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\Models\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "kargoKuryeAP\u0130\\Models\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\Models\\AppDbContext.cs",
+              "RelativeToolTip": "kargoKuryeAP\u0130\\Models\\AppDbContext.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAwwAMAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T19:51:07.466Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GonderiCreateDto.cs",
+              "DocumentMoniker": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\Controllers\\Dtost\\GonderiCreateDto.cs",
+              "RelativeDocumentMoniker": "kargoKuryeAP\u0130\\Controllers\\Dtost\\GonderiCreateDto.cs",
+              "ToolTip": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\Controllers\\Dtost\\GonderiCreateDto.cs",
+              "RelativeToolTip": "kargoKuryeAP\u0130\\Controllers\\Dtost\\GonderiCreateDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T19:58:45.402Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "GonderilerController.cs",
+              "DocumentMoniker": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\Controllers\\GonderilerController.cs",
+              "RelativeDocumentMoniker": "kargoKuryeAP\u0130\\Controllers\\GonderilerController.cs",
+              "ToolTip": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\Controllers\\GonderilerController.cs",
+              "RelativeToolTip": "kargoKuryeAP\u0130\\Controllers\\GonderilerController.cs",
+              "ViewState": "AgIAAGEAAAAAAAAAAAAYwH0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T19:20:41.42Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\Program.cs",
+              "RelativeDocumentMoniker": "kargoKuryeAP\u0130\\Program.cs",
+              "ToolTip": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\Program.cs",
+              "RelativeToolTip": "kargoKuryeAP\u0130\\Program.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAgwB4AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-09T17:39:34.325Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TakipOlaylariController.cs",
+              "DocumentMoniker": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\Controllers\\TakipOlaylariController.cs",
+              "RelativeDocumentMoniker": "kargoKuryeAP\u0130\\Controllers\\TakipOlaylariController.cs",
+              "ToolTip": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\Controllers\\TakipOlaylariController.cs",
+              "RelativeToolTip": "kargoKuryeAP\u0130\\Controllers\\TakipOlaylariController.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAgwDcAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T20:41:44.796Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TakipOlayiCreateDto.cs",
+              "DocumentMoniker": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\Controllers\\Dtost\\TakipOlayiCreateDto.cs",
+              "RelativeDocumentMoniker": "kargoKuryeAP\u0130\\Controllers\\Dtost\\TakipOlayiCreateDto.cs",
+              "ToolTip": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\Controllers\\Dtost\\TakipOlayiCreateDto.cs",
+              "RelativeToolTip": "kargoKuryeAP\u0130\\Controllers\\Dtost\\TakipOlayiCreateDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-10T20:40:47.253Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\appsettings.json",
+              "RelativeDocumentMoniker": "kargoKuryeAP\u0130\\appsettings.json",
+              "ToolTip": "C:\\Users\\acer\\Desktop\\nesne y\u00F6nelimli programlama\\c# dersleri2\\kargoKuryeAP\u0130\\kargoKuryeAP\u0130\\appsettings.json",
+              "RelativeToolTip": "kargoKuryeAP\u0130\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-09T17:43:37.817Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
