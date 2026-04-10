@@ -1,5 +1,5 @@
 ##  2. Hafta: Kargo Takip Sistemi
-
+Bu haftanın amacı, kullanıcıların takip numarası ile kargo bilgilerini sorgulayabileceği temel işlevselliği tamamlamaktır. Backend tarafında sorgulama API'si geliştirilirken, frontend tarafında kullanıcı arayüzü ve entegrasyon sağlanacaktır. Hafta sonunda kullanıcı takip numarası girip kargo durumunu görebilmelidir.
 
 | No | Teslim Edilecekler |
 |----|---------------------|
