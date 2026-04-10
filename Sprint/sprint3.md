@@ -1,4 +1,5 @@
 ## 3. Hafta: Admin ve Geçmiş Sistemi
+Bu haftanın amacı, sisteme yönetici yetkilerini ve kargo hareket geçmişi özelliğini kazandırmaktır. Admin kullanıcıları giriş yapabilecek, kargoların durumunu güncelleyebilecek ve tüm hareket geçmişini görebilecektir. Normal kullanıcılar ise sadece kendi kargolarının geçmişini görüntüleyebilecektir. Hafta sonunda yetkilendirme sistemi tamamen çalışır durumda olmalıdır.
 
 | No | Teslim Edilecekler |
 |----|---------------------|
@@ -38,7 +39,7 @@
 
 
 ---
-## 👥 Proje Yönetimi 
+##  Proje Yönetimi 
  Görev | Açıklama |
 |-------|----------|
 | Haftalık toplantı planı | durum değerlendirmesi |
