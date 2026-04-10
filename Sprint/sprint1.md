@@ -1,6 +1,6 @@
 ## 1. Hafta: Proje Kurulumu ve Temel Altyapı
-
-### Hafta Sonu Teslim Edilecekler
+Bu haftanın amacı, projenin temel yapı taşlarını oluşturmak ve tüm ekibin çalışmaya başlayabileceği ortak bir zemini hazırlamaktır. Hafta sonunda projenin hem backend hem de frontend tarafında çalışan bir iskeletinin bulunması hedeflenmektedir.
+### Hafta Teslim Edilecekler
 
 | | Teslim Edilecekler |
 |----|---------------------|
