@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kargo Takip Detayı</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="container">
+      <header class="main-header glass-card">
+        <div class="logo">
+          <i class="fa-solid fa-truck-fast"></i>
+          <h2>Kargo Takip Sistemi</h2>
+        </div>
+        <nav class="nav-links">
+          <a href="index.html">Ana Sayfa</a>
+          <a href="takip-detay.html" class="active">Takip Detayı</a>
+          <a href="admin.html">Admin Paneli</a>
+        </nav>
+      </header>
+
+      <section class="glass-card detail-card">
+        <a href="index.html" class="back-link">
+          <i class="fa-solid fa-arrow-left"></i> Geri Dön
+        </a>
+
+        <h1 class="detail-header">Kargo Takip Detayı</h1>
+
+        <div class="info-box">
+          <p><strong>Takip Numarası:</strong> 1234567890</p>
+          <p><strong>Gönderici:</strong> Ahmet Yılmaz</p>
+          <p><strong>Alıcı:</strong> Ayşe Demir</p>
+        </div>
+
+        <div class="status-box">
+          <h3>Durum: Yolda</h3>
+          <p>Tahmini Teslim Tarihi: 25 Mayıs 2024</p>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-line">
+            <div class="progress-line-fill"></div>
+          </div>
+
+          <div class="progress-steps">
+            <div class="step active">
+              <div class="step-circle">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <p>Hazırlanıyor</p>
+            </div>
+
+            <div class="step active">
+              <div class="step-circle">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <p>Yolda</p>
+            </div>
+
+            <div class="step">
+              <div class="step-circle">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <p>Teslim Edildi</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="map-box">
+          <div style="text-align:center;">
+            <i class="fa-solid fa-truck-moving" style="font-size:60px; margin-bottom:14px; color:var(--orange);"></i>
+            <p>Kargo Konum Görseli / Harita Alanı</p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        Kargo Takip Sistemi © 2026
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

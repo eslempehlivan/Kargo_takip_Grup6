@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Paneli</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="container">
+      <header class="main-header glass-card">
+        <div class="logo">
+          <i class="fa-solid fa-truck-fast"></i>
+          <h2>Kargo Takip Sistemi</h2>
+        </div>
+        <nav class="nav-links">
+          <a href="index.html">Ana Sayfa</a>
+          <a href="takip-detay.html">Takip Detayı</a>
+          <a href="admin.html" class="active">Admin Paneli</a>
+        </nav>
+      </header>
+
+      <h1 class="section-title">Admin Paneli</h1>
+
+      <section class="dashboard-top">
+        <div class="glass-card stat-card">
+          <div class="stat-icon" style="color: var(--text-soft);">
+            <i class="fa-solid fa-truck"></i>
+          </div>
+          <h3>1,250</h3>
+          <p>Toplam Kargolar</p>
+        </div>
+
+        <div class="glass-card stat-card">
+          <div class="stat-icon" style="color: var(--green);">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <h3>980</h3>
+          <p>Teslim Edilen</p>
+        </div>
+
+        <div class="glass-card stat-card">
+          <div class="stat-icon" style="color: var(--blue);">
+            <i class="fa-solid fa-truck-fast"></i>
+          </div>
+          <h3>210</h3>
+          <p>Yolda Olan</p>
+        </div>
+
+        <div class="glass-card stat-card">
+          <div class="stat-icon" style="color: var(--red);">
+            <i class="fa-solid fa-ban"></i>
+          </div>
+          <h3>60</h3>
+          <p>Geciken</p>
+        </div>
+      </section>
+
+      <section class="glass-card table-card">
+        <div class="filters">
+          <select>
+            <option>Durum: Tümü</option>
+            <option>Hazırlanıyor</option>
+            <option>Yolda</option>
+            <option>Teslim Edildi</option>
+          </select>
+
+          <select>
+            <option>Tarih: Tümü</option>
+            <option>Bugün</option>
+            <option>Bu Hafta</option>
+            <option>Bu Ay</option>
+          </select>
+
+          <button class="btn btn-secondary btn-icon">
+            <i class="fa-solid fa-calendar"></i>
+          </button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Takip No</th>
+                <th>Gönderici</th>
+                <th>Alıcı</th>
+                <th>Durum</th>
+                <th>İşlemler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>123456</td>
+                <td>Ahmet</td>
+                <td>Ayşe</td>
+                <td><span class="badge badge-blue">Yolda</span></td>
+                <td>
+                  <div class="actions">
+                    <button class="btn btn-secondary btn-icon"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn btn-danger btn-icon"><i class="fa-solid fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>654321</td>
+                <td>Mehmet</td>
+                <td>Zeynep</td>
+                <td><span class="badge badge-yellow">Hazırlanıyor</span></td>
+                <td>
+                  <div class="actions">
+                    <button class="btn btn-secondary btn-icon"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn btn-danger btn-icon"><i class="fa-solid fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+
+              <tr>
+                <td>987654</td>
+                <td>Elif</td>
+                <td>Can</td>
+                <td><span class="badge badge-green">Teslim Edildi</span></td>
+                <td>
+                  <div class="actions">
+                    <button class="btn btn-secondary btn-icon"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn btn-danger btn-icon"><i class="fa-solid fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination">
+          <button class="page-btn"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </section>
+
+      <footer class="footer">
+        Kargo Takip Sistemi © 2026
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
