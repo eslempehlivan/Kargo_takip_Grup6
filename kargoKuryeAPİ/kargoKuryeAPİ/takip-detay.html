@@ -92,54 +92,63 @@
     </div>
   </div>
 <script>
-    const params = new URLSearchParams(window.location.search);
-    const kargoNo = params.get("kargoNo");
+  const params = new URLSearchParams(window.location.search);
+  const kargoNo = params.get("kargoNo");
 
-    const kargolar = {
-      "123456": { gonderici: "Ahmet Yılmaz", alici: "Ayşe Demir", durum: "Yolda", koordinat: "40.9918,29.0283" },
-      "654321": { gonderici: "Mehmet Kaya", alici: "Zeynep Çelik", durum: "Hazırlanıyor", koordinat: "39.9208,32.8541" },
-      "987654": { gonderici: "Elif Şahin", alici: "Can Aydın", durum: "Teslim Edildi", koordinat: "38.4622,27.2161" },
-      "112233": { gonderici: "Mustafa Yücel", alici: "Fatma Keskin", durum: "Yolda", koordinat: "40.2117,28.9592" },
-      "445566": { gonderici: "Büşra Aslan", alici: "Volkan Sönmez", durum: "Hazırlanıyor", koordinat: "36.8841,30.7056" },
-      "778899": { gonderici: "Emre Polat", alici: "Gizem Tekin", durum: "Teslim Edildi", koordinat: "39.7767,30.5206" },
-      "334455": { gonderici: "Selin Doğan", alici: "Burak Yıldırım", durum: "Yolda", koordinat: "36.9914,35.3308" },
-      "667788": { gonderici: "Ozan Güler", alici: "Merve Aslan", durum: "Hazırlanıyor", koordinat: "41.0027,39.7168" }
+  const kargolar = {
+    "123456": { gonderici: "Ahmet Yılmaz", alici: "Ayşe Demir", durum: "Yolda", koordinat: "40.9918,29.0283" },
+    "654321": { gonderici: "Mehmet Kaya", alici: "Zeynep Çelik", durum: "Hazırlanıyor", koordinat: "39.9208,32.8541" },
+    "987654": { gonderici: "Elif Şahin", alici: "Can Aydın", durum: "Teslim Edildi", koordinat: "38.4622,27.2161" },
+    "112233": { gonderici: "Mustafa Yücel", alici: "Fatma Keskin", durum: "Yolda", koordinat: "40.2117,28.9592" }
+  };
+
+  const infoBox = document.querySelector(".info-box");
+  const statusText = document.querySelector(".status-box h3");
+  const mapFrame = document.getElementById("kargoHarita");
+  const steps = document.querySelectorAll(".step");
+
+  if (kargoNo && kargolar[kargoNo]) {
+    const kargo = kargolar[kargoNo];
+
+    // Bilgiler
+    infoBox.innerHTML = `
+      <p><strong>Takip Numarası:</strong> ${kargoNo}</p>
+      <p><strong>Gönderici:</strong> ${kargo.gonderici}</p>
+      <p><strong>Alıcı:</strong> ${kargo.alici}</p>
+    `;
+
+    statusText.textContent = "Durum: " + kargo.durum;
+
+    // Harita
+    mapFrame.src = `https://maps.google.com/maps?q=${kargo.koordinat}&hl=tr&z=14&output=embed`;
+
+    // Step sıfırla
+    steps.forEach(s => s.classList.remove("active"));
+
+    // Step ayarla (daha temiz)
+    const durumIndex = {
+      "Hazırlanıyor": 0,
+      "Yolda": 1,
+      "Teslim Edildi": 2
     };
 
-    if (kargoNo && kargolar[kargoNo]) {
-      document.querySelector(".info-box").innerHTML = `
-        <p><strong>Takip Numarası:</strong> ${kargoNo}</p>
-        <p><strong>Gönderici:</strong> ${kargolar[kargoNo].gonderici}</p>
-        <p><strong>Alıcı:</strong> ${kargolar[kargoNo].alici}</p>
-      `;
+    const index = durumIndex[kargo.durum];
 
-      document.querySelector(".status-box h3").textContent = "Durum: " + kargolar[kargoNo].durum;
+    steps.forEach((step, i) => {
+      if (i <= index) step.classList.add("active");
+    });
 
-      const latLon = kargolar[kargoNo].koordinat;
-      const haritaURL = `https://maps.google.com/maps?q=${latLon}&hl=tr&z=14&output=embed`;
-      document.getElementById("kargoHarita").src = haritaURL;
+  } else {
+    infoBox.innerHTML = `
+      <p style="color:red; text-align:center; font-weight:bold;">
+        Hatalı Numara! ❌
+      </p>
+    `;
 
-      const durum = kargolar[kargoNo].durum;
-      const steps = document.querySelectorAll(".step");
-      steps.forEach(step => step.classList.remove("active"));
-
-      if (durum === "Hazırlanıyor") {
-        steps[0].classList.add("active");
-      } else if (durum === "Yolda") {
-        steps[0].classList.add("active");
-        steps[1].classList.add("active");
-      } else if (durum === "Teslim Edildi") {
-        steps.forEach(step => step.classList.add("active"));
-      }
-
-    } else {
-      document.querySelector(".info-box").innerHTML = `
-        <p style="color: red; font-weight: bold; text-align: center; font-size: 18px;">Hatalı Numara! Kargo bulunamadı ❌</p>
-      `;
-      document.querySelector(".status-box").style.display = "none";
-      document.querySelector(".progress-wrap").style.display = "none";
-      document.querySelector(".map-box").style.display = "none";
-    }
-  </script>
+    document.querySelector(".status-box").style.display = "none";
+    document.querySelector(".progress-wrap").style.display = "none";
+    document.querySelector(".map-box").style.display = "none";
+  }
+</script>
 </body>
 </html>
