@@ -526,6 +526,7 @@ table tr:hover {
     gap: 14px;
   }
 
+  
   .nav-links {
     flex-wrap: wrap;
     justify-content: center;
