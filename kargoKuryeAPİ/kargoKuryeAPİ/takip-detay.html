@@ -110,7 +110,7 @@
   if (kargoNo && kargolar[kargoNo]) {
     const kargo = kargolar[kargoNo];
 
-    // Bilgiler
+    
     infoBox.innerHTML = `
       <p><strong>Takip Numarası:</strong> ${kargoNo}</p>
       <p><strong>Gönderici:</strong> ${kargo.gonderici}</p>
@@ -119,13 +119,13 @@
 
     statusText.textContent = "Durum: " + kargo.durum;
 
-    // Harita
+    
     mapFrame.src = `https://maps.google.com/maps?q=${kargo.koordinat}&hl=tr&z=14&output=embed`;
 
-    // Step sıfırla
+    
     steps.forEach(s => s.classList.remove("active"));
 
-    // Step ayarla (daha temiz)
+    
     const durumIndex = {
       "Hazırlanıyor": 0,
       "Yolda": 1,
@@ -141,7 +141,7 @@
   } else {
     infoBox.innerHTML = `
       <p style="color:red; text-align:center; font-weight:bold;">
-        Hatalı Numara!Kargo bulunamadı  ❌
+        Hatalı Numara Kargo bulunamadı! ❌
       </p>
     `;
 
