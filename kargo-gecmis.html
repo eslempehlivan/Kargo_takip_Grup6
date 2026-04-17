@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kargo Tarihçesi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #080d1a;
+      --card:       rgba(255,255,255,0.042);
+      --border:     rgba(255,255,255,0.08);
+      --accent:     #3d8ef0;
+      --green:      #1fd6a0;
+      --yellow:     #f5a623;
+      --red:        #f06060;
+      --text:       #dde3f5;
+      --muted:      #7a87a8;
+      --radius:     16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* animated mesh background */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 15% 25%, rgba(61,142,240,.13) 0%, transparent 65%),
+        radial-gradient(ellipse 55% 45% at 85% 75%, rgba(31,214,160,.09) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 35% at 55% 10%, rgba(240,96,96,.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .wrap { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 24px 16px 72px; }
+
+    /* ── Header ── */
+    .main-header {
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+      padding: 15px 26px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); backdrop-filter: blur(18px);
+      margin-bottom: 28px;
+    }
+    .logo { display: flex; align-items: center; gap: 11px; }
+    .logo i { font-size: 1.4rem; color: var(--accent); }
+    .logo h2 { font-size: 1rem; font-weight: 600; letter-spacing: -.2px; }
+    .nav-links { display: flex; gap: 18px; flex-wrap: wrap; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: .84rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    /* ── Back ── */
+    .back-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: .8rem; color: var(--muted); text-decoration: none;
+      margin-bottom: 26px; transition: color .2s;
+    }
+    .back-link:hover { color: var(--accent); }
+
+    /* ── Hero meta ── */
+    .hero {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); backdrop-filter: blur(16px);
+      padding: 28px 32px;
+      margin-bottom: 32px;
+      display: flex; flex-wrap: wrap; gap: 22px; align-items: center; justify-content: space-between;
+    }
+    .hero-left h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: -.4px; margin-bottom: 8px; }
+    .hero-left .chip {
+      font-family: 'JetBrains Mono', monospace; font-size: .74rem;
+      background: rgba(61,142,240,.1); border: 1px solid rgba(61,142,240,.22);
+      color: var(--accent); padding: 3px 11px; border-radius: 20px;
+      display: inline-block; margin-bottom: 14px;
+    }
+    .people { display: flex; flex-direction: column; gap: 4px; }
+    .people-row { display: flex; align-items: center; gap: 8px; font-size: .8rem; color: var(--muted); }
+    .people-row i { color: var(--accent); width: 14px; }
+    .people-row span { color: var(--text); font-weight: 500; }
+
+    .hero-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .76rem; font-weight: 600; padding: 5px 14px; border-radius: 20px;
+    }
+    .badge-blue   { background: rgba(61,142,240,.12); color: var(--accent);  border: 1px solid rgba(61,142,240,.25); }
+    .badge-green  { background: rgba(31,214,160,.12); color: var(--green);   border: 1px solid rgba(31,214,160,.25); }
+    .badge-yellow { background: rgba(245,166,35,.12);  color: var(--yellow); border: 1px solid rgba(245,166,35,.25); }
+
+    .eta { font-size: .76rem; color: var(--muted); text-align: right; line-height: 1.6; }
+    .eta strong { color: var(--text); }
+
+    /* ── Section header ── */
+    .sec-title {
+      font-size: .82rem; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 1.6px;
+      margin-bottom: 22px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .sec-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* ── Timeline ── */
+    .timeline { position: relative; padding-left: 38px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 12px; top: 8px; bottom: 8px; width: 2px;
+      background: linear-gradient(to bottom, var(--accent), rgba(61,142,240,.1));
+      border-radius: 4px;
+    }
+
+    .tl-item {
+      position: relative; margin-bottom: 14px;
+      opacity: 0; transform: translateX(-14px);
+      animation: fadeSlide .38s ease forwards;
+    }
+    .tl-item:nth-child(1)  { animation-delay: .04s; }
+    .tl-item:nth-child(2)  { animation-delay: .10s; }
+    .tl-item:nth-child(3)  { animation-delay: .16s; }
+    .tl-item:nth-child(4)  { animation-delay: .22s; }
+    .tl-item:nth-child(5)  { animation-delay: .28s; }
+    .tl-item:nth-child(6)  { animation-delay: .34s; }
+    .tl-item:nth-child(7)  { animation-delay: .40s; }
+    .tl-item:nth-child(8)  { animation-delay: .46s; }
+    .tl-item:nth-child(9)  { animation-delay: .52s; }
+    .tl-item:nth-child(10) { animation-delay: .58s; }
+
+    @keyframes fadeSlide { to { opacity: 1; transform: translateX(0); } }
+
+    .tl-dot {
+      position: absolute; left: -30px; top: 18px;
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .58rem; z-index: 2;
+    }
+    .tl-dot.done    { background: var(--green);  box-shadow: 0 0 10px rgba(31,214,160,.4); color: #fff; }
+    .tl-dot.active  { background: var(--yellow); box-shadow: 0 0 12px rgba(245,166,35,.5); color: #fff; animation: glow 1.8s infinite; }
+    .tl-dot.pending { background: rgba(255,255,255,.07); border: 2px solid var(--border); color: var(--muted); }
+
+    @keyframes glow {
+      0%,100% { box-shadow: 0 0 10px rgba(245,166,35,.5); }
+      50%      { box-shadow: 0 0 22px rgba(245,166,35,.85); }
+    }
+
+    .tl-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 16px 20px;
+      transition: border-color .2s, background .2s;
+    }
+    .tl-card:hover { border-color: rgba(61,142,240,.3); background: rgba(61,142,240,.04); }
+    .tl-card.is-active { border-color: rgba(245,166,35,.35); background: rgba(245,166,35,.05); }
+    .tl-card.is-done   { border-color: rgba(31,214,160,.18); }
+
+    .tl-head { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 7px; }
+    .tl-event { font-size: .9rem; font-weight: 600; }
+    .tl-time  { font-family: 'JetBrains Mono', monospace; font-size: .7rem; color: var(--muted); white-space: nowrap; }
+
+    .tl-location { font-size: .78rem; color: var(--muted); display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+    .tl-location i { color: var(--accent); font-size: .72rem; }
+    .tl-location .city-tag {
+      background: rgba(61,142,240,.1); border: 1px solid rgba(61,142,240,.2);
+      color: var(--accent); font-size: .68rem; font-weight: 600;
+      padding: 1px 8px; border-radius: 10px; letter-spacing: .3px;
+    }
+
+    .tl-desc { font-size: .78rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Empty ── */
+    .empty { text-align: center; padding: 70px 20px; color: var(--muted); }
+    .empty i { font-size: 2.4rem; display: block; margin-bottom: 14px; color: var(--border); }
+    .empty p { font-weight: 600; color: var(--red); }
+
+    /* ── Footer ── */
+    .footer { text-align: center; margin-top: 52px; font-size: .74rem; color: var(--muted); opacity: .55; }
+
+    @media (max-width: 540px) {
+      .hero { flex-direction: column; }
+      .hero-right { align-items: flex-start; }
+      .eta { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <header class="main-header">
+    <div class="logo">
+      <i class="fa-solid fa-truck-fast"></i>
+      <h2>Kargo Tarihçesi</h2>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="takip-detay.html">Takip Detayı</a>
+      <a href="admin.html" class="active">Admin Paneli</a>
+    </nav>
+  </header>
+
+  <a href="admin.html" class="back-link">
+    <i class="fa-solid fa-arrow-left"></i> Admin Paneline Geri Dön
+  </a>
+
+  <!-- Hero -->
+  <div class="hero" id="hero"></div>
+
+  <!-- Timeline -->
+  <div class="sec-title">
+    <i class="fa-solid fa-route" style="color:var(--accent)"></i> Rota & Şube Geçmişi
+  </div>
+  <div class="timeline" id="timeline"></div>
+
+  <footer class="footer">Kargo Tarihçesi</footer>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────
+   Her kargoya özel rota verisi (simülasyon)
+───────────────────────────────────────────── */
+const kargoData = {
+
+  "123456": {
+    gonderici: "Ahmet Yılmaz", alici: "Ayşe Demir",
+    durum: "Yolda", durum_key: "blue",
+    baslangic: "İstanbul", bitis: "Ankara",
+    tahmini: "17 Nisan 2026, Saat 18:00",
+    rota: [
+      { olay: "Kargo Oluşturuldu",           sube: "Kadıköy Şubesi",                 sehir: "İstanbul",  zaman: "14 Nis 2026, 09:12", durum: "done",   aciklama: "Gönderici paketi şubeye teslim etti, sisteme kayıt yapıldı." },
+      { olay: "Şubeden Ayrıldı",             sube: "Kadıköy Şubesi",                 sehir: "İstanbul",  zaman: "14 Nis 2026, 14:30", durum: "done",   aciklama: "Paket transfer aracına yüklendi, İstanbul aktarma merkezine gönderildi." },
+      { olay: "Aktarma Merkezine Ulaştı",    sube: "Pendik Aktarma Merkezi",         sehir: "İstanbul",  zaman: "14 Nis 2026, 17:55", durum: "done",   aciklama: "Kargo tarandı ve sıralamaya alındı." },
+      { olay: "Ankara'ya Hareket Etti",      sube: "Pendik Aktarma Merkezi",         sehir: "İstanbul",  zaman: "14 Nis 2026, 22:00", durum: "done",   aciklama: "Uzun yol TIR'ına yüklendi, Ankara güzergahında yola çıktı." },
+      { olay: "Ankara Merkezine Ulaştı",     sube: "Ankara Yenimahalle Aktarma",     sehir: "Ankara",    zaman: "15 Nis 2026, 05:40", durum: "done",   aciklama: "Kargo Ankara merkezine teslim alındı ve dağıtım şubelerine ayrıştırılıyor." },
+      { olay: "Dağıtım Şubesine Gönderildi", sube: "Çankaya Dağıtım Şubesi",        sehir: "Ankara",    zaman: "15 Nis 2026, 09:10", durum: "done",   aciklama: "Paket alıcı adresine en yakın şubeye yönlendirildi." },
+      { olay: "Dağıtıma Çıktı",             sube: "Çankaya Dağıtım Şubesi",         sehir: "Ankara",    zaman: "15 Nis 2026, 10:30", durum: "active", aciklama: "Kurye Serkan B. paketi teslim etmek için yola çıktı. Tahmini süre: 2-3 saat." },
+      { olay: "Teslim Edilecek",             sube: "Alıcı Adresi",                   sehir: "Ankara",    zaman: "Bekleniyor",         durum: "pending", aciklama: "Alıcı kapıda bulunamazsa şubede bekletilir." },
+    ]
+  },
+
+  "654321": {
+    gonderici: "Mehmet Kaya", alici: "Zeynep Çelik",
+    durum: "Hazırlanıyor", durum_key: "yellow",
+    baslangic: "Bursa", bitis: "Antalya",
+    tahmini: "19 Nisan 2026, Saat 14:00",
+    rota: [
+      { olay: "Sipariş Alındı",         sube: "Nilüfer Şubesi",           sehir: "Bursa",   zaman: "16 Nis 2026, 11:05", durum: "done",    aciklama: "Online sipariş sisteme düştü, şubeye atandı." },
+      { olay: "Paketleme Başladı",      sube: "Nilüfer Şubesi",           sehir: "Bursa",   zaman: "16 Nis 2026, 13:22", durum: "done",    aciklama: "Ürün depodan çekildi, paketleme sürecine alındı." },
+      { olay: "Paketleme Devam Ediyor", sube: "Nilüfer Şubesi",           sehir: "Bursa",   zaman: "16 Nis 2026, 14:50", durum: "active",  aciklama: "Hacimli ürün özel ambalajla sarılıyor, kalite kontrol bekleniyor." },
+      { olay: "Kargo Firmasına Teslim", sube: "Bursa Aktarma Merkezi",    sehir: "Bursa",   zaman: "Bekleniyor",         durum: "pending", aciklama: "Paket hazırlanınca kargo firmasına teslim edilecek." },
+      { olay: "Antalya'ya Hareket",     sube: "Bursa Aktarma Merkezi",    sehir: "Bursa",   zaman: "Bekleniyor",         durum: "pending", aciklama: "Güzergah: Bursa → İzmir → Antalya." },
+      { olay: "Teslim Edildi",          sube: "Alıcı Adresi",             sehir: "Antalya", zaman: "Bekleniyor",         durum: "pending", aciklama: "Tahmini teslim: 19 Nisan." },
+    ]
+  },
+
+  "987654": {
+    gonderici: "Elif Şahin", alici: "Can Aydın",
+    durum: "Teslim Edildi", durum_key: "green",
+    baslangic: "İzmir", bitis: "İstanbul",
+    tahmini: "Teslim Edildi",
+    rota: [
+      { olay: "Kargo Oluşturuldu",           sube: "Konak Şubesi",                 sehir: "İzmir",    zaman: "10 Nis 2026, 08:30", durum: "done", aciklama: "Paket sisteme kayıt edildi." },
+      { olay: "Şubeden Ayrıldı",             sube: "Konak Şubesi",                 sehir: "İzmir",    zaman: "10 Nis 2026, 12:00", durum: "done", aciklama: "Transfer aracına yüklendi." },
+      { olay: "Aktarma Merkezine Ulaştı",    sube: "İzmir Bornova Aktarma",        sehir: "İzmir",    zaman: "10 Nis 2026, 14:20", durum: "done", aciklama: "Tarandı, İstanbul hattına alındı." },
+      { olay: "İstanbul'a Hareket Etti",     sube: "İzmir Bornova Aktarma",        sehir: "İzmir",    zaman: "10 Nis 2026, 20:00", durum: "done", aciklama: "TIR yüklendi, gece güzergahında hareket etti." },
+      { olay: "İstanbul Merkezine Ulaştı",   sube: "Gebze Lojistik Üssü",         sehir: "İstanbul", zaman: "11 Nis 2026, 06:15", durum: "done", aciklama: "Merkeze indirildi, şubelere dağıtılmak üzere ayrıştırıldı." },
+      { olay: "Dağıtım Şubesine Ulaştı",    sube: "Üsküdar Dağıtım Şubesi",      sehir: "İstanbul", zaman: "11 Nis 2026, 09:50", durum: "done", aciklama: "Kuryeye atandı." },
+      { olay: "Dağıtıma Çıktı",             sube: "Üsküdar Dağıtım Şubesi",      sehir: "İstanbul", zaman: "11 Nis 2026, 10:45", durum: "done", aciklama: "Kurye Baran K. yola çıktı." },
+      { olay: "Teslim Edildi ✓",            sube: "Alıcı Adresi",                 sehir: "İstanbul", zaman: "11 Nis 2026, 13:28", durum: "done", aciklama: "Alıcı Can Aydın tarafından imzalanarak teslim alındı. İşlem tamamlandı." },
+    ]
+  },
+
+  "112233": {
+    gonderici: "Mustafa Yücel", alici: "Fatma Keskin",
+    durum: "Yolda", durum_key: "blue",
+    baslangic: "Ankara", bitis: "Trabzon",
+    tahmini: "18 Nisan 2026, Saat 16:00",
+    rota: [
+      { olay: "Kargo Oluşturuldu",         sube: "Sincan Şubesi",               sehir: "Ankara",   zaman: "15 Nis 2026, 10:00", durum: "done",   aciklama: "Kargo sisteme alındı." },
+      { olay: "Aktarma Merkezine Ulaştı",  sube: "Ankara Etimesgut Aktarma",    sehir: "Ankara",   zaman: "15 Nis 2026, 16:30", durum: "done",   aciklama: "Karadeniz hattına ayrıştırıldı." },
+      { olay: "Trabzon'a Hareket Etti",    sube: "Ankara Etimesgut Aktarma",    sehir: "Ankara",   zaman: "15 Nis 2026, 22:30", durum: "done",   aciklama: "Güzergah: Ankara → Samsun → Trabzon." },
+      { olay: "Samsun Aktarmaya Ulaştı",   sube: "Samsun Aktarma Merkezi",      sehir: "Samsun",   zaman: "16 Nis 2026, 06:00", durum: "done",   aciklama: "Kısa mola, Trabzon hattı aracına aktarıldı." },
+      { olay: "Trabzon'a Hareket Etti",    sube: "Samsun Aktarma Merkezi",      sehir: "Samsun",   zaman: "16 Nis 2026, 07:15", durum: "done",   aciklama: "D010 güzergahında ilerliyor." },
+      { olay: "Trabzon Merkezine Ulaştı",  sube: "Trabzon Akçaabat Aktarma",    sehir: "Trabzon",  zaman: "16 Nis 2026, 14:40", durum: "done",   aciklama: "Merkeze teslim alındı, şubeye sevk ediliyor." },
+      { olay: "Dağıtıma Çıktı",           sube: "Trabzon Merkez Dağıtım",      sehir: "Trabzon",  zaman: "17 Nis 2026, 09:00", durum: "active", aciklama: "Kurye Murat T. teslim için yolda." },
+      { olay: "Teslim Edilecek",           sube: "Alıcı Adresi",                sehir: "Trabzon",  zaman: "Bekleniyor",         durum: "pending", aciklama: "Tahmini teslim: 18 Nisan öğleden sonra." },
+    ]
+  },
+
+  "445566": {
+    gonderici: "Büşra Aslan", alici: "Volkan Sönmez",
+    durum: "Hazırlanıyor", durum_key: "yellow",
+    baslangic: "Antalya", bitis: "Mersin",
+    tahmini: "20 Nisan 2026, Saat 12:00",
+    rota: [
+      { olay: "Sipariş Alındı",         sube: "Kepez Şubesi",          sehir: "Antalya",  zaman: "17 Nis 2026, 09:45", durum: "done",    aciklama: "Sipariş onaylandı." },
+      { olay: "Depoya Gönderildi",      sube: "Antalya Ana Depo",      sehir: "Antalya",  zaman: "17 Nis 2026, 11:30", durum: "done",    aciklama: "Stoktan çekildi, paketleme alanına alındı." },
+      { olay: "Paketleniyor",           sube: "Antalya Ana Depo",      sehir: "Antalya",  zaman: "17 Nis 2026, 13:10", durum: "active",  aciklama: "Kırılabilir ürün olduğundan özel kabarcık naylonla sarılıyor." },
+      { olay: "Kargo Firmasına Teslim", sube: "Antalya Aktarma",       sehir: "Antalya",  zaman: "Bekleniyor",         durum: "pending", aciklama: "Paket tamamlanınca anlaşmalı kargo firmasına verilecek." },
+      { olay: "Mersin'e Hareket",       sube: "Antalya Aktarma",       sehir: "Antalya",  zaman: "Bekleniyor",         durum: "pending", aciklama: "Güzergah: Antalya → Adana → Mersin." },
+      { olay: "Teslim Edilecek",        sube: "Alıcı Adresi",          sehir: "Mersin",   zaman: "Bekleniyor",         durum: "pending", aciklama: "Tahmini teslimat 20 Nisan." },
+    ]
+  },
+
+  "778899": {
+    gonderici: "Emre Polat", alici: "Gizem Tekin",
+    durum: "Teslim Edildi", durum_key: "green",
+    baslangic: "Eskişehir", bitis: "İzmir",
+    tahmini: "Teslim Edildi",
+    rota: [
+      { olay: "Kargo Oluşturuldu",          sube: "Odunpazarı Şubesi",         sehir: "Eskişehir", zaman: "08 Nis 2026, 10:20", durum: "done", aciklama: "Paket kayıt altına alındı." },
+      { olay: "Aktarma Merkezine Ulaştı",   sube: "Eskişehir Merkez Aktarma",  sehir: "Eskişehir", zaman: "08 Nis 2026, 15:00", durum: "done", aciklama: "Ege hattına aktarıldı." },
+      { olay: "İzmir'e Hareket Etti",       sube: "Eskişehir Merkez Aktarma",  sehir: "Eskişehir", zaman: "08 Nis 2026, 21:00", durum: "done", aciklama: "Güzergah: Eskişehir → Kütahya → Uşak → İzmir." },
+      { olay: "Uşak Aktarmasında Mola",     sube: "Uşak Aktarma Noktası",      sehir: "Uşak",      zaman: "09 Nis 2026, 03:30", durum: "done", aciklama: "Kısa mola, araç kontrolü yapıldı." },
+      { olay: "İzmir Merkezine Ulaştı",     sube: "Bornova Lojistik Merkezi",  sehir: "İzmir",     zaman: "09 Nis 2026, 08:50", durum: "done", aciklama: "Karşıyaka şubesine sevk edildi." },
+      { olay: "Dağıtım Şubesine Ulaştı",   sube: "Karşıyaka Şubesi",          sehir: "İzmir",     zaman: "09 Nis 2026, 11:15", durum: "done", aciklama: "Kuryeye teslim edildi." },
+      { olay: "Dağıtıma Çıktı",            sube: "Karşıyaka Şubesi",          sehir: "İzmir",     zaman: "09 Nis 2026, 12:00", durum: "done", aciklama: "Kurye Cem Y. yola çıktı." },
+      { olay: "Teslim Edildi ✓",           sube: "Alıcı Adresi",              sehir: "İzmir",     zaman: "09 Nis 2026, 14:22", durum: "done", aciklama: "Gizem Tekin imzalayarak teslim aldı. Başarıyla tamamlandı." },
+    ]
+  },
+
+  "334455": {
+    gonderici: "Selin Doğan", alici: "Burak Yıldırım",
+    durum: "Yolda", durum_key: "blue",
+    baslangic: "İstanbul", bitis: "Adana",
+    tahmini: "18 Nisan 2026, Saat 20:00",
+    rota: [
+      { olay: "Kargo Oluşturuldu",          sube: "Bahçelievler Şubesi",      sehir: "İstanbul", zaman: "15 Nis 2026, 14:00", durum: "done",   aciklama: "Şubeye teslim alındı." },
+      { olay: "Aktarma Merkezine Ulaştı",   sube: "Tuzla Aktarma Merkezi",   sehir: "İstanbul", zaman: "15 Nis 2026, 19:30", durum: "done",   aciklama: "Güney hattına alındı." },
+      { olay: "Adana'ya Hareket Etti",      sube: "Tuzla Aktarma Merkezi",   sehir: "İstanbul", zaman: "15 Nis 2026, 23:45", durum: "done",   aciklama: "Güzergah: İstanbul → Konya → Adana." },
+      { olay: "Konya Aktarmasında Mola",    sube: "Konya Aktarma Merkezi",   sehir: "Konya",    zaman: "16 Nis 2026, 06:00", durum: "done",   aciklama: "Araç değişimi yapıldı." },
+      { olay: "Konya'dan Ayrıldı",          sube: "Konya Aktarma Merkezi",   sehir: "Konya",    zaman: "16 Nis 2026, 07:10", durum: "done",   aciklama: "Adana yönünde devam ediyor." },
+      { olay: "Adana Merkezinde",           sube: "Adana Seyhan Aktarma",    sehir: "Adana",    zaman: "16 Nis 2026, 14:55", durum: "done",   aciklama: "Kargo indirildi, şubeye sevk süreci başladı." },
+      { olay: "Dağıtıma Çıktı",            sube: "Adana Merkez Dağıtım",    sehir: "Adana",    zaman: "17 Nis 2026, 10:20", durum: "active", aciklama: "Kurye Taner A. teslim için yolda." },
+      { olay: "Teslim Edilecek",            sube: "Alıcı Adresi",            sehir: "Adana",    zaman: "Bekleniyor",         durum: "pending", aciklama: "Tahmini: 18 Nisan akşamı." },
+    ]
+  },
+
+  "667788": {
+    gonderici: "Ozan Güler", alici: "Merve Aslan",
+    durum: "Hazırlanıyor", durum_key: "yellow",
+    baslangic: "Trabzon", bitis: "Konya",
+    tahmini: "21 Nisan 2026, Saat 11:00",
+    rota: [
+      { olay: "Sipariş Alındı",       sube: "Ortahisar Şubesi",        sehir: "Trabzon", zaman: "17 Nis 2026, 08:00", durum: "done",    aciklama: "Sipariş sisteme düştü." },
+      { olay: "Paketleme Bekleniyor", sube: "Trabzon Depo",            sehir: "Trabzon", zaman: "17 Nis 2026, 10:30", durum: "active",  aciklama: "Ürün depodan çekilmek üzere sırada bekliyor." },
+      { olay: "Kargo Firmasına Teslim", sube: "Trabzon Aktarma",       sehir: "Trabzon", zaman: "Bekleniyor",         durum: "pending", aciklama: "Paketlenince kargo firmasına verilecek." },
+      { olay: "Konya'ya Hareket",     sube: "Trabzon Aktarma",         sehir: "Trabzon", zaman: "Bekleniyor",         durum: "pending", aciklama: "Güzergah: Trabzon → Samsun → Ankara → Konya." },
+      { olay: "Teslim Edilecek",      sube: "Alıcı Adresi",            sehir: "Konya",   zaman: "Bekleniyor",         durum: "pending", aciklama: "Tahmini 21 Nisan." },
+    ]
+  },
+
+  "401905": {
+    gonderici: "Arda Aslan", alici: "Ela Vardar",
+    durum: "Yolda", durum_key: "blue",
+    baslangic: "İstanbul", bitis: "İstanbul",
+    tahmini: "17 Nisan 2026, Saat 17:30",
+    rota: [
+      { olay: "Kargo Oluşturuldu",         sube: "Beşiktaş Şubesi",         sehir: "İstanbul", zaman: "17 Nis 2026, 07:00", durum: "done",   aciklama: "Şehir içi kargo olarak sisteme alındı." },
+      { olay: "Ana Dağıtım Merkezine Ulaştı", sube: "Bağcılar Dağıtım Merkezi", sehir: "İstanbul", zaman: "17 Nis 2026, 08:30", durum: "done",   aciklama: "Avrupa yakası hattında ayrıştırıldı." },
+      { olay: "Şişli Şubesine Geldi",      sube: "Şişli Dağıtım Şubesi",   sehir: "İstanbul", zaman: "17 Nis 2026, 09:50", durum: "done",   aciklama: "Alıcı adresine en yakın şubeye yönlendirildi." },
+      { olay: "Kuryeye Atandı",            sube: "Şişli Dağıtım Şubesi",   sehir: "İstanbul", zaman: "17 Nis 2026, 10:15", durum: "done",   aciklama: "Kurye Kerem D.'ye atandı." },
+      { olay: "Dağıtıma Çıktı",           sube: "Şişli Dağıtım Şubesi",   sehir: "İstanbul", zaman: "17 Nis 2026, 10:45", durum: "active", aciklama: "Kurye rotası üzerinde ilerliyor, tahminen 2 saat içinde kapıya ulaşır." },
+      { olay: "Teslim Edilecek",           sube: "Alıcı Adresi",           sehir: "İstanbul", zaman: "Bekleniyor",         durum: "pending", aciklama: "Tahmini teslim: Bugün 17:30." },
+    ]
+  }
+};
+
+/* ── URL'den oku ── */
+const params  = new URLSearchParams(window.location.search);
+const kargoNo = params.get("kargoNo");
+const hero    = document.getElementById("hero");
+const tl      = document.getElementById("timeline");
+
+if (kargoNo && kargoData[kargoNo]) {
+  const d = kargoData[kargoNo];
+
+  const badgeMap = {
+    blue:   { cls: "badge-blue",   icon: "fa-truck",        label: d.durum },
+    green:  { cls: "badge-green",  icon: "fa-circle-check", label: d.durum },
+    yellow: { cls: "badge-yellow", icon: "fa-box-open",     label: d.durum }
+  };
+  const b = badgeMap[d.durum_key];
+
+  hero.innerHTML = `
+    <div class="hero-left">
+      <h1>Rota &amp; Şube Geçmişi</h1>
+      <span class="chip"># ${kargoNo}</span>
+      <div class="people">
+        <div class="people-row"><i class="fa-solid fa-user"></i> Gönderici: <span>${d.gonderici}</span></div>
+        <div class="people-row"><i class="fa-solid fa-location-dot"></i> Alıcı: <span>${d.alici}</span></div>
+        <div class="people-row"><i class="fa-solid fa-route"></i> Güzergah: <span>${d.baslangic} → ${d.bitis}</span></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <span class="badge ${b.cls}"><i class="fa-solid ${b.icon}"></i> ${b.label}</span>
+      <div class="eta">Tahmini Teslim<br><strong>${d.tahmini}</strong></div>
+    </div>
+  `;
+
+  d.rota.forEach(r => {
+    const item = document.createElement("div");
+    item.className = "tl-item";
+    item.innerHTML = `
+      <div class="tl-dot ${r.durum}">
+        <i class="fa-solid ${r.durum === 'pending' ? 'fa-clock' : 'fa-check'}"></i>
+      </div>
+      <div class="tl-card ${r.durum === 'active' ? 'is-active' : r.durum === 'done' ? 'is-done' : ''}">
+        <div class="tl-head">
+          <span class="tl-event">${r.olay}</span>
+          <span class="tl-time">${r.zaman}</span>
+        </div>
+        <div class="tl-location">
+          <i class="fa-solid fa-building"></i>
+          ${r.sube}
+          <span class="city-tag">${r.sehir}</span>
+        </div>
+        <div class="tl-desc">${r.aciklama}</div>
+      </div>
+    `;
+    tl.appendChild(item);
+  });
+
+} else {
+  hero.innerHTML = `<div class="empty" style="width:100%"><i class="fa-solid fa-triangle-exclamation"></i><p>Kargo bulunamadı — geçersiz takip numarası.</p></div>`;
+}
+</script>
+</body>
+</html>
