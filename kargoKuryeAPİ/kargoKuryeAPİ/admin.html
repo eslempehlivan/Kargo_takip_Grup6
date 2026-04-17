@@ -9,6 +9,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="style.css" />
+
+  
+  <style>
+    .btn-history {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      background: rgba(61,142,240,.12);
+      color: #3d8ef0;
+      border: 1px solid rgba(61,142,240,.28);
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: .76rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .18s, box-shadow .18s, transform .15s;
+      white-space: nowrap;
+    }
+    .btn-history:hover {
+      background: rgba(61,142,240,.22);
+      box-shadow: 0 2px 12px rgba(61,142,240,.3);
+      transform: translateY(-1px);
+    }
+    .btn-history i { font-size: .72rem; }
+  </style>
 </head>
 <body>
   <div class="page-wrapper">
@@ -94,6 +121,7 @@
               </tr>
             </thead>
             <tbody>
+
               <tr>
                 <td>123456</td>
                 <td>Ahmet Yılmaz</td>
@@ -101,6 +129,9 @@
                 <td><span class="badge badge-blue">Yolda</span></td>
                 <td>
                   <div class="actions">
+                    <a href="kargo-gecmis.html?kargoNo=123456" class="btn-history">
+                      <i class="fa-solid fa-clock-rotate-left"></i> Geçmiş
+                    </a>
                     <button class="btn btn-secondary btn-icon"><i class="fa-solid fa-pen"></i></button>
                     <button class="btn btn-danger btn-icon"><i class="fa-solid fa-trash"></i></button>
                   </div>
@@ -114,6 +145,9 @@
                 <td><span class="badge badge-yellow">Hazırlanıyor</span></td>
                 <td>
                   <div class="actions">
+                    <a href="kargo-gecmis.html?kargoNo=654321" class="btn-history">
+                      <i class="fa-solid fa-clock-rotate-left"></i> Geçmiş
+                    </a>
                     <button class="btn btn-secondary btn-icon"><i class="fa-solid fa-pen"></i></button>
                     <button class="btn btn-danger btn-icon"><i class="fa-solid fa-trash"></i></button>
                   </div>
@@ -127,6 +161,9 @@
                 <td><span class="badge badge-green">Teslim Edildi</span></td>
                 <td>
                   <div class="actions">
+                    <a href="kargo-gecmis.html?kargoNo=987654" class="btn-history">
+                      <i class="fa-solid fa-clock-rotate-left"></i> Geçmiş
+                    </a>
                     <button class="btn btn-secondary btn-icon"><i class="fa-solid fa-pen"></i></button>
                     <button class="btn btn-danger btn-icon"><i class="fa-solid fa-trash"></i></button>
                   </div>
@@ -140,6 +177,9 @@
                 <td><span class="badge badge-blue">Yolda</span></td>
                 <td>
                   <div class="actions">
+                    <a href="kargo-gecmis.html?kargoNo=112233" class="btn-history">
+                      <i class="fa-solid fa-clock-rotate-left"></i> Geçmiş
+                    </a>
                     <button class="btn btn-secondary btn-icon"><i class="fa-solid fa-pen"></i></button>
                     <button class="btn btn-danger btn-icon"><i class="fa-solid fa-trash"></i></button>
                   </div>
@@ -153,6 +193,9 @@
                 <td><span class="badge badge-yellow">Hazırlanıyor</span></td>
                 <td>
                   <div class="actions">
+                    <a href="kargo-gecmis.html?kargoNo=445566" class="btn-history">
+                      <i class="fa-solid fa-clock-rotate-left"></i> Geçmiş
+                    </a>
                     <button class="btn btn-secondary btn-icon"><i class="fa-solid fa-pen"></i></button>
                     <button class="btn btn-danger btn-icon"><i class="fa-solid fa-trash"></i></button>
                   </div>
@@ -166,6 +209,9 @@
                 <td><span class="badge badge-green">Teslim Edildi</span></td>
                 <td>
                   <div class="actions">
+                    <a href="kargo-gecmis.html?kargoNo=778899" class="btn-history">
+                      <i class="fa-solid fa-clock-rotate-left"></i> Geçmiş
+                    </a>
                     <button class="btn btn-secondary btn-icon"><i class="fa-solid fa-pen"></i></button>
                     <button class="btn btn-danger btn-icon"><i class="fa-solid fa-trash"></i></button>
                   </div>
@@ -179,6 +225,9 @@
                 <td><span class="badge badge-blue">Yolda</span></td>
                 <td>
                   <div class="actions">
+                    <a href="kargo-gecmis.html?kargoNo=334455" class="btn-history">
+                      <i class="fa-solid fa-clock-rotate-left"></i> Geçmiş
+                    </a>
                     <button class="btn btn-secondary btn-icon"><i class="fa-solid fa-pen"></i></button>
                     <button class="btn btn-danger btn-icon"><i class="fa-solid fa-trash"></i></button>
                   </div>
@@ -192,6 +241,9 @@
                 <td><span class="badge badge-yellow">Hazırlanıyor</span></td>
                 <td>
                   <div class="actions">
+                    <a href="kargo-gecmis.html?kargoNo=667788" class="btn-history">
+                      <i class="fa-solid fa-clock-rotate-left"></i> Geçmiş
+                    </a>
                     <button class="btn btn-secondary btn-icon"><i class="fa-solid fa-pen"></i></button>
                     <button class="btn btn-danger btn-icon"><i class="fa-solid fa-trash"></i></button>
                   </div>
@@ -205,16 +257,20 @@
                 <td><span class="badge badge-yellow">Hazırlanıyor</span></td>
                 <td>
                   <div class="actions">
+                    <a href="kargo-gecmis.html?kargoNo=401905" class="btn-history">
+                      <i class="fa-solid fa-clock-rotate-left"></i> Geçmiş
+                    </a>
                     <button class="btn btn-secondary btn-icon"><i class="fa-solid fa-pen"></i></button>
                     <button class="btn btn-danger btn-icon"><i class="fa-solid fa-trash"></i></button>
                   </div>
                 </td>
               </tr>
-              
+
             </tbody>
           </table>
         </div>
-       <div class="pagination">
+
+        <div class="pagination">
           <button class="page-btn active">1</button>
         </div>
       </section>
