@@ -280,5 +280,15 @@
       </footer>
     </div>
   </div>
+  <script>
+    if(localStorage.getItem("login")!== "true"){
+      window.location.href = "admin-login.html";
+    }
+  </script>
+  <script>
+    function logout(){
+      localStorage.remaoveItem("login");
+    }
+  </script>
 </body>
 </html>
