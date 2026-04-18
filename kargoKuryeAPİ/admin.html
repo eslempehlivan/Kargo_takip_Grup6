@@ -11,79 +11,21 @@
   <link rel="stylesheet" href="style.css" />
 
   <style>
+    /* Buton ve Form Ekstra Stilleri */
     .btn-history {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 6px 12px;
-      background: rgba(61,142,240,.12);
-      color: #3d8ef0;
-      border: 1px solid rgba(61,142,240,.28);
-      border-radius: 8px;
-      font-family: 'Poppins', sans-serif;
-      font-size: .76rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background .18s, box-shadow .18s, transform .15s;
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px;
+      background: rgba(61,142,240,.12); color: #3d8ef0; border: 1px solid rgba(61,142,240,.28);
+      border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: .76rem;
+      font-weight: 600; cursor: pointer; text-decoration: none; transition: 0.2s;
     }
-    .btn-history:hover {
-      background: rgba(61,142,240,.22);
-      box-shadow: 0 2px 12px rgba(61,142,240,.3);
-      transform: translateY(-1px);
-    }
-    .btn-history i { font-size: .72rem; }
+    .btn-history:hover { background: rgba(61,142,240,.22); transform: translateY(-1px); }
 
-    /* Yeni Kargo Ekleme Formu Stilleri */
-    .form-section { margin-bottom: 2rem; }
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
-      margin-top: 15px;
-    }
-    .form-group { display: flex; flex-direction: column; gap: 5px; }
-    .form-group label { font-size: 0.85rem; font-weight: 500; color: var(--text-main); }
-    .form-group input, .form-group select {
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid rgba(0,0,0,0.1);
-      background: rgba(255,255,255,0.5);
-      font-family: 'Poppins', sans-serif;
-    }
-    .btn-save {
-      background: var(--blue);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      align-self: flex-end;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-    .btn-save:hover { opacity: 0.9; transform: scale(1.02); }
+    .form-group label { font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; display: block; color: var(--text-soft); }
+    .form-input { width: 100%; padding: 10px 10px 10px 35px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.08); background: rgba(255,255,255,0.7); outline: none; font-family: 'Poppins'; }
 
-    /* Modal (Güncelleme Ekranı) Stilleri */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.5);
-      backdrop-filter: blur(4px);
-    }
-    .modal-content {
-      background: white;
-      margin: 10% auto;
-      padding: 2rem;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
+    /* Modal Stilleri */
+    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
+    .modal-content { background: white; margin: 10% auto; padding: 2rem; border-radius: 15px; width: 90%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
     .close-modal { cursor: pointer; font-size: 1.5rem; }
   </style>
@@ -100,7 +42,7 @@
           <a href="index.html">Ana Sayfa</a>
           <a href="takip-detay.html">Takip Detayı</a>
           <a href="admin.html" class="active">Admin Paneli</a>
-          <a href='#' onclick="logout()" style="color:red;">Çıkış Yap </a>
+          <a href='#' onclick="logout()" style="color:red; font-weight: 600;">Çıkış Yap </a>
         </nav>
       </header>
 
@@ -109,7 +51,7 @@
       <section class="dashboard-top">
         <div class="glass-card stat-card">
           <div class="stat-icon" style="color: var(--text-soft);"><i class="fa-solid fa-truck"></i></div>
-          <h3>1,250</h3>
+          <h3 id="statTotal">1,250</h3>
           <p>Toplam Kargolar</p>
         </div>
         <div class="glass-card stat-card">
@@ -117,57 +59,56 @@
           <h3>980</h3>
           <p>Teslim Edilen</p>
         </div>
-        <div class="glass-card stat-card">
-          <div class="stat-icon" style="color: var(--blue);"><i class="fa-solid fa-truck-fast"></i></div>
-          <h3>210</h3>
-          <p>Yolda Olan</p>
-        </div>
-        <div class="glass-card stat-card">
-          <div class="stat-icon" style="color: var(--red);"><i class="fa-solid fa-ban"></i></div>
-          <h3>60</h3>
-          <p>Geciken</p>
-        </div>
       </section>
 
-      <section class="glass-card form-section">
-        <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-plus-circle"></i> Yeni Kargo Ekle</h3>
-        <form class="form-grid">
+      <section class="glass-card form-section" style="margin-bottom: 2rem; padding: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+          <i class="fa-solid fa-square-plus" style="color: var(--blue); font-size: 1.2rem;"></i>
+          <h3 style="margin: 0; font-size: 1.1rem; font-weight: 600;">Yeni Kargo Kaydı Oluştur</h3>
+        </div>
+
+        <form id="addCargoForm" onsubmit="addCargo(event)" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
           <div class="form-group">
-            <label>Takip No</label>
-            <input type="text" placeholder="Örn: 998877" required>
+            <label>Takip Numarası</label>
+            <div style="position: relative;">
+              <i class="fa-solid fa-hashtag" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; color: #aaa;"></i>
+              <input type="text" id="kargoNo" class="form-input" placeholder="Örn: 502931" required>
+            </div>
           </div>
           <div class="form-group">
-            <label>Gönderici Adı</label>
-            <input type="text" placeholder="Ad Soyad" required>
+            <label>Gönderici</label>
+            <div style="position: relative;">
+              <i class="fa-solid fa-user-arrow-up" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; color: #aaa;"></i>
+              <input type="text" id="gonderici" class="form-input" placeholder="Ad Soyad" required>
+            </div>
           </div>
           <div class="form-group">
-            <label>Alıcı Adı</label>
-            <input type="text" placeholder="Ad Soyad" required>
+            <label>Alıcı</label>
+            <div style="position: relative;">
+              <i class="fa-solid fa-user-arrow-down" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; color: #aaa;"></i>
+              <input type="text" id="alici" class="form-input" placeholder="Ad Soyad" required>
+            </div>
           </div>
           <div class="form-group">
-            <label>Başlangıç Durumu</label>
-            <select>
-              <option value="Hazırlanıyor">Hazırlanıyor</option>
-              <option value="Yolda">Yolda</option>
-            </select>
+            <label>Durum</label>
+            <div style="position: relative;">
+              <i class="fa-solid fa-box-open" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; color: #aaa;"></i>
+              <select id="durum" class="form-input" style="appearance: none; cursor: pointer;">
+                <option value="Hazırlanıyor">Hazırlanıyor</option>
+                <option value="Yolda">Yolda</option>
+                <option value="Teslim Edildi">Teslim Edildi</option>
+              </select>
+            </div>
           </div>
-          <button type="submit" class="btn-save">Kargoyu Kaydet</button>
+          <button type="submit" class="btn-save" style="background: #3d8ef0; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: auto;">
+            <i class="fa-solid fa-paper-plane"></i> Kaydet
+          </button>
         </form>
       </section>
 
       <section class="glass-card table-card">
-        <div class="filters">
-          <select>
-            <option>Durum: Tümü</option>
-            <option>Hazırlanıyor</option>
-            <option>Yolda</option>
-            <option>Teslim Edildi</option>
-          </select>
-          <button class="btn btn-secondary btn-icon"><i class="fa-solid fa-calendar"></i></button>
-        </div>
-
         <div class="table-wrap">
-          <table>
+          <table id="cargoTable">
             <thead>
               <tr>
                 <th>Takip No</th>
@@ -185,17 +126,12 @@
                 <td><span class="badge badge-blue">Yolda</span></td>
                 <td>
                   <div class="actions">
-                    <a href="kargo-gecmis.html?kargoNo=123456" class="btn-history" title="Geçmiş">
-                      <i class="fa-solid fa-clock-rotate-left"></i>
-                    </a>
-                    <button class="btn btn-secondary btn-icon" onclick="openUpdateModal('123456', 'Yolda')" title="Düzenle">
-                      <i class="fa-solid fa-pen"></i>
-                    </button>
-                    <button class="btn btn-danger btn-icon" title="Sil"><i class="fa-solid fa-trash"></i></button>
+                    <button class="btn btn-secondary btn-icon" onclick="openUpdateModal('123456', 'Yolda')"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn btn-danger btn-icon" onclick="this.closest('tr').remove()"><i class="fa-solid fa-trash"></i></button>
                   </div>
                 </td>
               </tr>
-              </tbody>
+            </tbody>
           </table>
         </div>
       </section>
@@ -210,22 +146,18 @@
         <h3>Durum Güncelle</h3>
         <span class="close-modal" onclick="closeModal()">&times;</span>
       </div>
-      <form id="updateForm">
-        <div class="form-group" style="margin-bottom: 20px;">
-          <label>Takip No: <strong id="modalKargoNo"></strong></label>
-          <select id="newStatus" style="width: 100%; margin-top: 10px;">
-            <option value="Hazırlanıyor">Hazırlanıyor</option>
-            <option value="Yolda">Yolda</option>
-            <option value="Teslim Edildi">Teslim Edildi</option>
-            <option value="İptal Edildi">İptal Edildi</option>
-          </select>
-        </div>
-        <button type="submit" class="btn-save" style="width: 100%;">Güncelle</button>
-      </form>
+      <p>Kargo No: <strong id="modalKargoNo"></strong></p>
+      <select id="newStatus" class="form-input" style="margin-top: 15px;">
+        <option value="Hazırlanıyor">Hazırlanıyor</option>
+        <option value="Yolda">Yolda</option>
+        <option value="Teslim Edildi">Teslim Edildi</option>
+      </select>
+      <button onclick="saveNewStatus()" class="btn-save" style="width: 100%; margin-top: 20px; background: #2ecc71;">Güncelle</button>
     </div>
   </div>
 
   <script>
+    // Giriş Kontrolü
     if(localStorage.getItem("login") !== "true"){
       window.location.href = "admin-login.html";
     }
@@ -235,19 +167,66 @@
       window.location.href = "admin-login.html";
     }
 
-    function openUpdateModal(no, currentStatus) {
-      document.getElementById('updateModal').style.display = 'block';
+    // YENİ KARGO EKLEME FONKSİYONU
+    function addCargo(event) {
+      event.preventDefault();
+      
+      const no = document.getElementById('kargoNo').value;
+      const gon = document.getElementById('gonderici').value;
+      const ali = document.getElementById('alici').value;
+      const dur = document.getElementById('durum').value;
+
+      let badge = dur === "Teslim Edildi" ? "badge-green" : (dur === "Yolda" ? "badge-blue" : "badge-yellow");
+
+      const table = document.getElementById('cargoTable').getElementsByTagName('tbody')[0];
+      const row = table.insertRow(0); // En üste ekle
+      
+      row.innerHTML = `
+        <td>${no}</td>
+        <td>${gon}</td>
+        <td>${ali}</td>
+        <td><span class="badge ${badge}">${dur}</span></td>
+        <td>
+          <div class="actions">
+            <button class="btn btn-secondary btn-icon" onclick="openUpdateModal('${no}', '${dur}')"><i class="fa-solid fa-pen"></i></button>
+            <button class="btn btn-danger btn-icon" onclick="this.closest('tr').remove()"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </td>
+      `;
+
+      document.getElementById('addCargoForm').reset();
+      alert("Kargo listeye eklendi!");
+    }
+
+    // MODAL YÖNETİMİ
+    let currentEditRow = null;
+
+    function openUpdateModal(no, status) {
       document.getElementById('modalKargoNo').innerText = no;
+      document.getElementById('newStatus').value = status;
+      document.getElementById('updateModal').style.display = 'block';
+      
+      // Düzenlenecek satırı bul
+      const rows = document.querySelectorAll("#cargoTable tbody tr");
+      rows.forEach(row => {
+        if(row.cells[0].innerText === no) currentEditRow = row;
+      });
     }
 
     function closeModal() {
       document.getElementById('updateModal').style.display = 'none';
     }
 
-    window.onclick = function(event) {
-      if (event.target == document.getElementById('updateModal')) {
-        closeModal();
+    function saveNewStatus() {
+      const newStatus = document.getElementById('newStatus').value;
+      let badge = newStatus === "Teslim Edildi" ? "badge-green" : (newStatus === "Yolda" ? "badge-blue" : "badge-yellow");
+      
+      if(currentEditRow) {
+        currentEditRow.cells[3].innerHTML = `<span class="badge ${badge}">${newStatus}</span>`;
+        // Modal içindeki fonksiyonu güncellemek için parametreyi de yeniliyoruz
+        currentEditRow.cells[4].querySelector('.btn-secondary').setAttribute('onclick', `openUpdateModal('${currentEditRow.cells[0].innerText}', '${newStatus}')`);
       }
+      closeModal();
     }
   </script>
 </body>
