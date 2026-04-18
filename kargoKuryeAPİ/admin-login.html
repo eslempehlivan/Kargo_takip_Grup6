@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Giriş</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #0f172a; /* Arka planı biraz belirginleştirdim */
+            font-family: sans-serif;
+        }
+        .login-box {
+            width: 350px;
+            padding: 30px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px); /* Modern cam efekti */
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            color: white;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #1e293b;
+            color: white;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #3d8ef0;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .back-link:hover {
+            color: #3d8ef0;
+        }
+        .error {
+            color: #f87171;
+            margin-top: 15px;
+            font-size: 14px;
+            min-height: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-box">
+    <h2>Admin Giriş</h2>
+    <input type="text" id="username" placeholder="Kullanıcı Adı">
+    <input type="password" id="password" placeholder="Şifre">
+    <button onclick="login()">Giriş Yap</button>
+    
+    <p id="error" class="error"></p>
+
+    <a href="index.html" class="back-link">← Ana Sayfaya Dön</a>
+</div>
+
+<script>
+function login() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+    let errorMsg = document.getElementById("error");
+
+    if(user === "" || pass === ""){
+        errorMsg.innerText = "Alanlar boş bırakılamaz!";
+        return;
+    }
+
+    // Basit doğrulama (Geliştirme aşaması için)
+    if(user === "admin" && pass === "1234"){
+        localStorage.setItem("login", "true");
+        window.location.href = "admin.html";
+    } else {
+        errorMsg.innerText = "Kullanıcı adı veya şifre hatalı!";
+    }
+}
+</script>
+
+</body>
+</html>
