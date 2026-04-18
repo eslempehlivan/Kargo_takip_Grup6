@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kargo Takip | Admin Paneli</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #1a1f2b;
+            --card-bg: rgba(255, 255, 255, 0.07);
+            --primary-orange: #f38d1d;
+            --text-gray: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-green: #22c55e;
+            --danger-red: #ef4444;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at top right, #2d3748, #1a1f2b);
+            color: white;
+            margin: 0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container { max-width: 1100px; margin: auto; }
+
+        
+        .header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 30px; 
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .header-actions { display: flex; align-items: center; gap: 20px; }
+
+        
+        .btn-logout {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-red);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-logout:hover {
+            background: var(--danger-red);
+            color: white;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .stat-card { display: flex; justify-content: space-between; align-items: center; }
+        .stat-card i { font-size: 24px; opacity: 0.8; }
+        .stat-card h3 { margin: 0; font-size: 24px; }
+        .stat-card p { margin: 0; color: var(--text-gray); font-size: 13px; }
+
+        
+        .add-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            align-items: end;
+        }
+
+        .input-group { display: flex; flex-direction: column; gap: 8px; }
+        .input-group label { font-size: 12px; color: var(--text-gray); margin-left: 5px; }
+        
+        input, select {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 15px;
+            border-radius: 10px;
+            color: white;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus { border-color: var(--primary-orange); background: rgba(0, 0, 0, 0.3); }
+
+        .btn-add {
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(243, 141, 29, 0.3);
+            transition: 0.3s;
+        }
+
+        .btn-add:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+      
+        .table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 600px; }
+        th { text-align: left; color: var(--text-gray); font-size: 13px; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .yolda { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #3b82f6; }
+        .hazir { background: rgba(243, 141, 29, 0.2); color: #fbbf24; border: 1px solid #f38d1d; }
+        .teslim { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+
+        .action-btns { display: flex; gap: 8px; }
+        .btn-icon {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: white;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-icon:hover { background: rgba(255, 255, 255, 0.15); }
+        .btn-delete:hover { color: var(--danger-red); }
+
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2><i class="fa-solid fa-truck-ramp-box" style="color: var(--primary-orange); margin-right: 10px;"></i> Kargo Admin</h2>
+        <div class="header-actions">
+            <div id="clock" style="color: var(--text-gray); font-size: 14px; font-weight: 300;"></div>
+            <button class="btn-logout" onclick="cikisYap()">
+                <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
+            </button>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="card stat-card">
+            <div><p>Toplam Kargo</p><h3 id="totalCount">0</h3></div>
+            <i class="fa-solid fa-boxes-stacked" style="color: var(--accent-blue);"></i>
+        </div>
+        <div class="card stat-card">
+            <div><p>Teslim Edilen</p><h3 id="deliveredCount" style="color: var(--accent-green);">0</h3></div>
+            <i class="fa-solid fa-circle-check" style="color: var(--accent-green);"></i>
+        </div>
+        <div class="card stat-card">
+            <div><p>Yolda Olan</p><h3 id="onWayCount">0</h3></div>
+            <i class="fa-solid fa-truck-fast" style="color: var(--primary-orange);"></i>
+        </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 25px;">
+        <div class="add-form">
+            <div class="input-group">
+                <label>Takip No</label>
+                <input type="text" id="inpNo" placeholder="Örn: TR10020">
+            </div>
+            <div class="input-group">
+                <label>Gönderici / Alıcı</label>
+                <input type="text" id="inpIsim" placeholder="İsim Soyisim">
+            </div>
+            <div class="input-group">
+                <label>Durum</label>
+                <select id="inpDurum">
+                    <option value="Hazırlanıyor">Hazırlanıyor</option>
+                    <option value="Yolda">Yolda</option>
+                    <option value="Teslim Edildi">Teslim Edildi</option>
+                </select>
+            </div>
+            <button class="btn-add" onclick="kargoEkle()">Ekle</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Takip No</th>
+                        <th>Gönderici / Alıcı</th>
+                        <th>Durum</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody id="liste">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    
+    let kargolar = [
+        {no: "TR88291", detay: "Ahmet Yılmaz / Ayşe Demir", durum: "Yolda"},
+        {no: "TR34102", detay: "Mehmet Çelik / Zeynep Kaya", durum: "Hazırlanıyor"},
+        {no: "TR90211", detay: "Selin Aydın / Mert Korkmaz", durum: "Teslim Edildi"},
+        {no: "TR11254", detay: "Hüseyin Ak / Fatma Şen", durum: "Yolda"},
+        {no: "TR44509", detay: "Mustafa Öztürk / Burak Yıldız", durum: "Hazırlanıyor"},
+        {no: "TR77821", detay: "Ali Vural / Gamze Yalçın", durum: "Teslim Edildi"},
+        {no: "TR10233", detay: "Ece Erdem / Murat Aslan", durum: "Yolda"},
+        {no: "TR40598", detay: "Deniz Bulut / Umut Güneş", durum: "Yolda"},
+        {no: "TR70812", detay: "Sibel Tekin / Hakan Uzun", durum: "Hazırlanıyor"},
+        {no: "TR11145", detay: "Kaan Aras / Pelin Koç", durum: "Teslim Edildi"},
+        {no: "TR33367", detay: "Ömer Faruk / Büşra Yücel", durum: "Yolda"},
+        {no: "TR55521", detay: "Cem Tan / Osman Güven", durum: "Teslim Edildi"},
+        {no: "TR77703", detay: "Esra Bilgiç / Kerem Can", durum: "Hazırlanıyor"},
+        {no: "TR99981", detay: "Sinan Engin / Berk Atan", durum: "Yolda"},
+        {no: "TR12100", detay: "Emel Sayın / Nihan Soylu", durum: "Teslim Edildi"}
+    ];
+
+    function render() {
+        const liste = document.getElementById("liste");
+        liste.innerHTML = "";
+        
+        let counts = {total: kargolar.length, delivered: 0, onWay: 0};
+
+        kargolar.forEach((k, index) => {
+            let cls = k.durum === "Yolda" ? "yolda" : k.durum === "Hazırlanıyor" ? "hazir" : "teslim";
+            if(k.durum === "Teslim Edildi") counts.delivered++;
+            if(k.durum === "Yolda") counts.onWay++;
+
+            liste.innerHTML += `
+                <tr>
+                    <td style="font-weight: 600; color: var(--accent-blue);">#${k.no}</td>
+                    <td>${k.detay}</td>
+                    <td><span class="badge ${cls}">${k.durum}</span></td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-icon" title="Durum Değiştir" onclick="durumGuncelle(${index})">
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                            </button>
+                            <button class="btn-icon btn-delete" title="Kargoyu Sil" onclick="sil(${index})">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        });
+
+        // İstatistikleri güncelle
+        document.getElementById("totalCount").innerText = counts.total.toLocaleString();
+        document.getElementById("deliveredCount").innerText = counts.delivered.toLocaleString();
+        document.getElementById("onWayCount").innerText = counts.onWay.toLocaleString();
+    }
+
+    function kargoEkle() {
+        const no = document.getElementById("inpNo").value;
+        const detay = document.getElementById("inpIsim").value;
+        const durum = document.getElementById("inpDurum").value;
+
+        if(no && detay) {
+            kargolar.unshift({no, detay, durum}); // Yeni ekleneni en başa koy
+            render();
+            document.getElementById("inpNo").value = "";
+            document.getElementById("inpIsim").value = "";
+        } else {
+            alert("Lütfen Takip No ve İsim alanlarını doldurun.");
+        }
+    }
+
+    function durumGuncelle(i) {
+        const dongu = ["Hazırlanıyor", "Yolda", "Teslim Edildi"];
+        let currentIdx = dongu.indexOf(kargolar[i].durum);
+        let nextIdx = (currentIdx + 1) % dongu.length;
+        kargolar[i].durum = dongu[nextIdx];
+        render();
+    }
+
+    function sil(i) {
+        if(confirm("Bu kargo kaydını silmek istediğinize emin misiniz?")) {
+            kargolar.splice(i, 1);
+            render();
+        }
+    }
+
+    function cikisYap() {
+        if(confirm("Güvenli çıkış yapmak istiyor musunuz?")) {
+            alert("Oturum kapatıldı.");
+            location.reload();
+        }
+    }
+
+
+    function updateClock() {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        document.getElementById("clock").innerText = now.toLocaleDateString('tr-TR', options);
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+    render();
+</script>
+
+</body>
+</html>
