@@ -1,27 +1,24 @@
+Takip
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kargo Takip Detayı</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
   <div class="page-wrapper">
     <div class="container">
-
       <header class="main-header glass-card">
         <div class="logo">
           <i class="fa-solid fa-truck-fast"></i>
           <h2>Kargo Takip Sistemi</h2>
         </div>
-
         <nav class="nav-links">
           <a href="index.html">Ana Sayfa</a>
           <a href="takip-detay.html" class="active">Takip Detayı</a>
@@ -30,7 +27,6 @@
       </header>
 
       <section class="glass-card detail-card">
-
         <a href="index.html" class="back-link">
           <i class="fa-solid fa-arrow-left"></i> Geri Dön
         </a>
@@ -45,7 +41,7 @@
 
         <div class="status-box">
           <h3>Durum: Yolda</h3>
-          <p id="teslimTarihi">Tahmini Teslim Tarihi: </p>
+          <p>Tahmini Teslim Tarihi: 25 Mayıs 2024</p>
         </div>
 
         <div class="progress-wrap">
@@ -55,43 +51,47 @@
 
           <div class="progress-steps">
             <div class="step active">
-              <div class="step-circle"><i class="fa-solid fa-check"></i></div>
+              <div class="step-circle">
+                <i class="fa-solid fa-check"></i>
+              </div>
               <p>Hazırlanıyor</p>
             </div>
 
             <div class="step active">
-              <div class="step-circle"><i class="fa-solid fa-check"></i></div>
+              <div class="step-circle">
+                <i class="fa-solid fa-check"></i>
+              </div>
               <p>Yolda</p>
             </div>
 
             <div class="step">
-              <div class="step-circle"><i class="fa-solid fa-check"></i></div>
+              <div class="step-circle">
+                <i class="fa-solid fa-check"></i>
+              </div>
               <p>Teslim Edildi</p>
             </div>
           </div>
         </div>
-
-        <div class="map-box" style="padding:0; overflow:hidden; border-radius:12px;">
-          <iframe
+         <div class="map-box" style="padding: 0; overflow: hidden; border-radius: 12px;">
+          <iframe 
             id="kargoHarita"
-            src=""
-            width="100%"
-            height="300"
-            style="border:0;"
-            allowfullscreen
-            loading="lazy">
+            src="" 
+            width="100%" 
+            height="300" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
           </iframe>
         </div>
-
+        
       </section>
 
       <footer class="footer">
         Kargo Takip Sistemi © 2026
       </footer>
-
     </div>
   </div>
-
 <script>
   const params = new URLSearchParams(window.location.search);
   const kargoNo = params.get("kargoNo");
@@ -105,36 +105,18 @@
     "778899": { gonderici: "Emre Polat", alici: "Gizem Tekin", durum: "Teslim Edildi", koordinat: "39.7767,30.5206" },
     "334455": { gonderici: "Selin Doğan", alici: "Burak Yıldırım", durum: "Yolda", koordinat: "36.9914,35.3308" },
     "667788": { gonderici: "Ozan Güler", alici: "Merve Aslan", durum: "Hazırlanıyor", koordinat: "41.0027,39.7168" },
-    "401905": { gonderici: "Arda Aslan", alici: "Ela Vardar", durum: "Yolda", koordinat: "41.0082,28.9784" }
+    "401905": { gonderici: "Arda Aslan", alici: "Ela Vardar", durum: "Yolda", koordinat:  "41.0082,28.9784" }
   };
 
   const infoBox = document.querySelector(".info-box");
   const statusText = document.querySelector(".status-box h3");
   const mapFrame = document.getElementById("kargoHarita");
   const steps = document.querySelectorAll(".step");
-  const teslimTarihiEl = document.getElementById("teslimTarihi");
-
-  function tarihHesapla(durum) {
-    let gun = 0;
-
-    if (durum === "Hazırlanıyor") gun = 5;
-    if (durum === "Yolda") gun = 2;
-    if (durum === "Teslim Edildi") gun = 0;
-
-    const tarih = new Date();
-    tarih.setDate(tarih.getDate() + gun);
-
-    return tarih.toLocaleDateString("tr-TR", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    });
-  }
 
   if (kargoNo && kargolar[kargoNo]) {
-
     const kargo = kargolar[kargoNo];
 
+    
     infoBox.innerHTML = `
       <p><strong>Takip Numarası:</strong> ${kargoNo}</p>
       <p><strong>Gönderici:</strong> ${kargo.gonderici}</p>
@@ -143,18 +125,13 @@
 
     statusText.textContent = "Durum: " + kargo.durum;
 
+    
     mapFrame.src = `https://maps.google.com/maps?q=${kargo.koordinat}&hl=tr&z=14&output=embed`;
 
     
-    const tarih = tarihHesapla(kargo.durum);
-
-    teslimTarihiEl.textContent =
-      kargo.durum === "Teslim Edildi"
-        ? "Teslim Tarihi: " + tarih
-        : "Tahmini Teslim Tarihi: " + tarih;
-
     steps.forEach(s => s.classList.remove("active"));
 
+    
     const durumIndex = {
       "Hazırlanıyor": 0,
       "Yolda": 1,
@@ -179,6 +156,5 @@
     document.querySelector(".map-box").style.display = "none";
   }
 </script>
-
 </body>
 </html>
