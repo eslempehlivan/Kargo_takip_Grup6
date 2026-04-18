@@ -1,239 +1,267 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Paneli</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kargo Takip | Admin Paneli</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #1a1f2b;
+            --card-bg: rgba(255, 255, 255, 0.07);
+            --primary-orange: #f38d1d;
+            --text-gray: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-green: #22c55e;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle at top right, #2d3748, #1a1f2b);
+            color: white;
+            margin: 0;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-<style>
-body{
-  font-family:'Poppins',sans-serif;
-  background:linear-gradient(135deg,#1e293b,#0f172a);
-  color:white;
-  margin:0;
-}
+        .container { max-width: 1100px; margin: auto; }
 
-.container{
-  width:90%;
-  margin:auto;
-  padding:20px;
-}
+        /* HEADER & STATS */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
 
-/* CARD */
-.card{
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(12px);
-  border-radius:16px;
-  padding:20px;
-  box-shadow:0 8px 25px rgba(0,0,0,0.4);
-}
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
 
-/* TOP STATS */
-.stats{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin-bottom:20px;
-}
+        .stat-card { display: flex; justify-content: space-between; align-items: center; }
+        .stat-card i { font-size: 24px; opacity: 0.8; }
+        .stat-card h3 { margin: 0; font-size: 24px; }
+        .stat-card p { margin: 0; color: var(--text-gray); font-size: 13px; }
 
-.stat{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
+        /* FORM SECTION (Görseldeki Sorgu Ekranı Stilinde) */
+        .add-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 15px;
+            margin-bottom: 30px;
+            align-items: end;
+        }
 
-.stat i{
-  font-size:22px;
-}
+        .input-group { display: flex; flex-direction: column; gap: 8px; }
+        .input-group label { font-size: 12px; color: var(--text-gray); margin-left: 5px; }
+        
+        input, select {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 15px;
+            border-radius: 10px;
+            color: white;
+            outline: none;
+            transition: 0.3s;
+        }
 
-.stat h3{
-  margin:0;
-}
+        input:focus { border-color: var(--primary-orange); }
 
-.green{color:#22c55e;}
-.blue{color:#3b82f6;}
-.orange{color:#f97316;}
-.red{color:#ef4444;}
+        .btn-add {
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(243, 141, 29, 0.3);
+            transition: 0.3s;
+        }
 
-/* TABLE */
-table{
-  width:100%;
-  border-collapse:collapse;
-}
+        .btn-add:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-th,td{
-  padding:12px;
-  border-bottom:1px solid rgba(255,255,255,0.1);
-}
+        /* TABLE */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; color: var(--text-gray); font-size: 13px; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
 
-th{
-  text-align:left;
-  color:#94a3b8;
-}
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
 
-/* BADGES */
-.badge{
-  padding:5px 10px;
-  border-radius:10px;
-  font-size:12px;
-}
+        .yolda { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #3b82f6; }
+        .hazir { background: rgba(243, 141, 29, 0.2); color: #fbbf24; border: 1px solid #f38d1d; }
+        .teslim { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
 
-.yolda{background:#3b82f6;}
-.hazir{background:#f97316;}
-.teslim{background:#22c55e;}
-
-/* BUTTONS */
-.btn{
-  padding:5px 10px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:12px;
-}
-
-.btn-edit{background:#3b82f6;color:white;}
-.btn-delete{background:#ef4444;color:white;}
-
-/* FILTER */
-.filters{
-  display:flex;
-  gap:10px;
-  margin-bottom:15px;
-}
-
-select{
-  padding:8px;
-  border-radius:8px;
-  border:none;
-}
-
-</style>
+        .action-btns { display: flex; gap: 8px; }
+        .btn-icon {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: white;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-icon:hover { background: rgba(255, 255, 255, 0.15); }
+        .btn-delete:hover { color: #ef4444; }
+    </style>
 </head>
-
 <body>
 
 <div class="container">
+    <div class="header">
+        <h2><i class="fa-solid fa-layer-group"></i> Admin Paneli</h2>
+        <div id="clock" style="color: var(--text-gray); font-size: 14px;"></div>
+    </div>
 
-<h2>🚚 Admin Paneli</h2>
+    <div class="stats">
+        <div class="card stat-card">
+            <div><p>Toplam Kargo</p><h3 id="totalCount">0</h3></div>
+            <i class="fa-solid fa-box" style="color: var(--accent-blue);"></i>
+        </div>
+        <div class="card stat-card">
+            <div><p>Teslim Edilen</p><h3 id="deliveredCount" style="color: var(--accent-green);">0</h3></div>
+            <i class="fa-solid fa-circle-check" style="color: var(--accent-green);"></i>
+        </div>
+        <div class="card stat-card">
+            <div><p>Yolda Olan</p><h3 id="onWayCount">0</h3></div>
+            <i class="fa-solid fa-truck-fast" style="color: var(--primary-orange);"></i>
+        </div>
+    </div>
 
-<!-- STAT CARDS -->
-<div class="stats">
+    <div class="card" style="margin-bottom: 25px;">
+        <div class="add-form">
+            <div class="input-group">
+                <label>Takip Numarası</label>
+                <input type="text" id="inpNo" placeholder="Örn: 123456">
+            </div>
+            <div class="input-group">
+                <label>Gönderici / Alıcı</label>
+                <input type="text" id="inpIsim" placeholder="Örn: Ahmet / Ayşe">
+            </div>
+            <div class="input-group">
+                <label>Başlangıç Durumu</label>
+                <select id="inpDurum">
+                    <option value="Hazırlanıyor">Hazırlanıyor</option>
+                    <option value="Yolda">Yolda</option>
+                    <option value="Teslim Edildi">Teslim Edildi</option>
+                </select>
+            </div>
+            <button class="btn-add" onclick="kargoEkle()">Kargo Ekle</button>
+        </div>
+    </div>
 
-<div class="card stat">
-  <div>
-    <h3>1,250</h3>
-    <p>Toplam</p>
-  </div>
-  <i class="fa-solid fa-truck"></i>
-</div>
-
-<div class="card stat">
-  <div>
-    <h3>980</h3>
-    <p>Teslim</p>
-  </div>
-  <i class="fa-solid fa-check green"></i>
-</div>
-
-<div class="card stat">
-  <div>
-    <h3>210</h3>
-    <p>Yolda</p>
-  </div>
-  <i class="fa-solid fa-truck-fast blue"></i>
-</div>
-
-<div class="card stat">
-  <div>
-    <h3>60</h3>
-    <p>Geciken</p>
-  </div>
-  <i class="fa-solid fa-ban red"></i>
-</div>
-
-</div>
-
-<!-- TABLE CARD -->
-<div class="card">
-
-<div class="filters">
-  <select>
-    <option>Durum: Tümü</option>
-    <option>Yolda</option>
-    <option>Hazırlanıyor</option>
-    <option>Teslim</option>
-  </select>
-
-  <select>
-    <option>Tarih: Tümü</option>
-    <option>Bugün</option>
-    <option>Bu Hafta</option>
-  </select>
-</div>
-
-<table>
-<thead>
-<tr>
-  <th>Takip No</th>
-  <th>Gönderici</th>
-  <th>Alıcı</th>
-  <th>Durum</th>
-  <th>İşlem</th>
-</tr>
-</thead>
-
-<tbody id="liste"></tbody>
-</table>
-
-</div>
-
+    <div class="card">
+        <table>
+            <thead>
+                <tr>
+                    <th>Takip No</th>
+                    <th>Detaylar (Gön. / Alıcı)</th>
+                    <th>Durum</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody id="liste">
+                </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
-let kargolar = [
-  {no:"123456", gonderici:"Ahmet", alici:"Ayşe", durum:"Yolda"},
-  {no:"654321", gonderici:"Mehmet", alici:"Zeynep", durum:"Hazırlanıyor"},
-  {no:"987654", gonderici:"Elif", alici:"Can", durum:"Teslim"}
-];
+    let kargolar = [
+        {no: "123456", detay: "Ahmet Yılmaz / Ayşe Demir", durum: "Yolda"},
+        {no: "654321", detay: "Mehmet Can / Elif Su", durum: "Hazırlanıyor"}
+    ];
 
-function render(){
-  let html="";
+    function render() {
+        const liste = document.getElementById("liste");
+        liste.innerHTML = "";
+        
+        let counts = {total: kargolar.length, delivered: 0, onWay: 0};
 
-  kargolar.forEach((k,i)=>{
-    let cls = k.durum==="Yolda"?"yolda":
-              k.durum==="Hazırlanıyor"?"hazir":"teslim";
+        kargolar.forEach((k, index) => {
+            let cls = k.durum === "Yolda" ? "yolda" : k.durum === "Hazırlanıyor" ? "hazir" : "teslim";
+            if(k.durum === "Teslim Edildi") counts.delivered++;
+            if(k.durum === "Yolda") counts.onWay++;
 
-    html+=`
-    <tr>
-      <td>${k.no}</td>
-      <td>${k.gonderici}</td>
-      <td>${k.alici}</td>
-      <td><span class="badge ${cls}">${k.durum}</span></td>
-      <td>
-        <button class="btn btn-edit" onclick="degistir(${i})">Durum</button>
-        <button class="btn btn-delete" onclick="sil(${i})">Sil</button>
-      </td>
-    </tr>`;
-  });
+            liste.innerHTML += `
+                <tr>
+                    <td style="font-weight: 600;">#${k.no}</td>
+                    <td>${k.detay}</td>
+                    <td><span class="badge ${cls}">${k.durum}</span></td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-icon" title="Durum Güncelle" onclick="durumGuncelle(${index})">
+                                <i class="fa-solid fa-rotate"></i>
+                            </button>
+                            <button class="btn-icon btn-delete" title="Sil" onclick="sil(${index})">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        });
 
-  document.getElementById("liste").innerHTML=html;
-}
+        // İstatistikleri güncelle
+        document.getElementById("totalCount").innerText = counts.total;
+        document.getElementById("deliveredCount").innerText = counts.delivered;
+        document.getElementById("onWayCount").innerText = counts.onWay;
+    }
 
-function degistir(i){
-  if(kargolar[i].durum==="Yolda") kargolar[i].durum="Teslim";
-  else kargolar[i].durum="Yolda";
-  render();
-}
+    function kargoEkle() {
+        const no = document.getElementById("inpNo").value;
+        const detay = document.getElementById("inpIsim").value;
+        const durum = document.getElementById("inpDurum").value;
 
-function sil(i){
-  kargolar.splice(i,1);
-  render();
-}
+        if(no && detay) {
+            kargolar.push({no, detay, durum});
+            render();
+            // Formu temizle
+            document.getElementById("inpNo").value = "";
+            document.getElementById("inpIsim").value = "";
+        } else {
+            alert("Lütfen alanları doldurun!");
+        }
+    }
 
-render();
+    function durumGuncelle(i) {
+        const dongu = ["Hazırlanıyor", "Yolda", "Teslim Edildi"];
+        let suankiIdx = dongu.indexOf(kargolar[i].durum);
+        let yeniIdx = (suankiIdx + 1) % dongu.length;
+        kargolar[i].durum = dongu[yeniIdx];
+        render();
+    }
+
+    function sil(i) {
+        if(confirm("Bu kargoyu silmek istediğinize emin misiniz?")) {
+            kargolar.splice(i, 1);
+            render();
+        }
+    }
+
+    // Saat gösterimi
+    setInterval(() => {
+        const now = new Date();
+        document.getElementById("clock").innerText = now.toLocaleString('tr-TR');
+    }, 1000);
+
+    render();
 </script>
 
 </body>
