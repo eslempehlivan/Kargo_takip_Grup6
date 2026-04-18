@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Paneli</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#1e293b,#0f172a);
+  color:white;
+  margin:0;
+}
+
+.container{
+  width:90%;
+  margin:auto;
+  padding:20px;
+}
+
+/* CARD */
+.card{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.4);
+}
+
+/* TOP STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.stat{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.stat i{
+  font-size:22px;
+}
+
+.stat h3{
+  margin:0;
+}
+
+.green{color:#22c55e;}
+.blue{color:#3b82f6;}
+.orange{color:#f97316;}
+.red{color:#ef4444;}
+
+/* TABLE */
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  padding:12px;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+th{
+  text-align:left;
+  color:#94a3b8;
+}
+
+/* BADGES */
+.badge{
+  padding:5px 10px;
+  border-radius:10px;
+  font-size:12px;
+}
+
+.yolda{background:#3b82f6;}
+.hazir{background:#f97316;}
+.teslim{background:#22c55e;}
+
+/* BUTTONS */
+.btn{
+  padding:5px 10px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.btn-edit{background:#3b82f6;color:white;}
+.btn-delete{background:#ef4444;color:white;}
+
+/* FILTER */
+.filters{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+select{
+  padding:8px;
+  border-radius:8px;
+  border:none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🚚 Admin Paneli</h2>
+
+<!-- STAT CARDS -->
+<div class="stats">
+
+<div class="card stat">
+  <div>
+    <h3>1,250</h3>
+    <p>Toplam</p>
+  </div>
+  <i class="fa-solid fa-truck"></i>
+</div>
+
+<div class="card stat">
+  <div>
+    <h3>980</h3>
+    <p>Teslim</p>
+  </div>
+  <i class="fa-solid fa-check green"></i>
+</div>
+
+<div class="card stat">
+  <div>
+    <h3>210</h3>
+    <p>Yolda</p>
+  </div>
+  <i class="fa-solid fa-truck-fast blue"></i>
+</div>
+
+<div class="card stat">
+  <div>
+    <h3>60</h3>
+    <p>Geciken</p>
+  </div>
+  <i class="fa-solid fa-ban red"></i>
+</div>
+
+</div>
+
+<!-- TABLE CARD -->
+<div class="card">
+
+<div class="filters">
+  <select>
+    <option>Durum: Tümü</option>
+    <option>Yolda</option>
+    <option>Hazırlanıyor</option>
+    <option>Teslim</option>
+  </select>
+
+  <select>
+    <option>Tarih: Tümü</option>
+    <option>Bugün</option>
+    <option>Bu Hafta</option>
+  </select>
+</div>
+
+<table>
+<thead>
+<tr>
+  <th>Takip No</th>
+  <th>Gönderici</th>
+  <th>Alıcı</th>
+  <th>Durum</th>
+  <th>İşlem</th>
+</tr>
+</thead>
+
+<tbody id="liste"></tbody>
+</table>
+
+</div>
+
+</div>
+
+<script>
+let kargolar = [
+  {no:"123456", gonderici:"Ahmet", alici:"Ayşe", durum:"Yolda"},
+  {no:"654321", gonderici:"Mehmet", alici:"Zeynep", durum:"Hazırlanıyor"},
+  {no:"987654", gonderici:"Elif", alici:"Can", durum:"Teslim"}
+];
+
+function render(){
+  let html="";
+
+  kargolar.forEach((k,i)=>{
+    let cls = k.durum==="Yolda"?"yolda":
+              k.durum==="Hazırlanıyor"?"hazir":"teslim";
+
+    html+=`
+    <tr>
+      <td>${k.no}</td>
+      <td>${k.gonderici}</td>
+      <td>${k.alici}</td>
+      <td><span class="badge ${cls}">${k.durum}</span></td>
+      <td>
+        <button class="btn btn-edit" onclick="degistir(${i})">Durum</button>
+        <button class="btn btn-delete" onclick="sil(${i})">Sil</button>
+      </td>
+    </tr>`;
+  });
+
+  document.getElementById("liste").innerHTML=html;
+}
+
+function degistir(i){
+  if(kargolar[i].durum==="Yolda") kargolar[i].durum="Teslim";
+  else kargolar[i].durum="Yolda";
+  render();
+}
+
+function sil(i){
+  kargolar.splice(i,1);
+  render();
+}
+
+render();
+</script>
+
+</body>
+</html>
