@@ -185,7 +185,22 @@
 <script>
     let kargolar = [
         {no: "123456", detay: "Ahmet Yılmaz / Ayşe Demir", durum: "Yolda"},
-        {no: "654321", detay: "Mehmet Can / Elif Su", durum: "Hazırlanıyor"}
+        {no: "654321", detay: "Mehmet Can / Elif Su", durum: "Hazırlanıyor"},
+        {no: "TR88291", detay: "Ahmet Yılmaz / Ayşe Demir", durum: "Yolda"},
+        {no: "TR34102", detay: "Mehmet Çelik / Zeynep Kaya", durum: "Hazırlanıyor"},
+        {no: "TR90211", detay: "Selin Aydın / Mert Korkmaz", durum: "Teslim Edildi"},
+        {no: "TR11254", detay: "Hüseyin Ak / Fatma Şen", durum: "Yolda"},
+        {no: "TR44509", detay: "Mustafa Öztürk / Burak Yıldız", durum: "Hazırlanıyor"},
+        {no: "TR77821", detay: "Ali Vural / Gamze Yalçın", durum: "Teslim Edildi"},
+        {no: "TR10233", detay: "Ece Erdem / Murat Aslan", durum: "Yolda"},
+        {no: "TR40598", detay: "Deniz Bulut / Umut Güneş", durum: "Yolda"},
+        {no: "TR70812", detay: "Sibel Tekin / Hakan Uzun", durum: "Hazırlanıyor"},
+        {no: "TR11145", detay: "Kaan Aras / Pelin Koç", durum: "Teslim Edildi"},
+        {no: "TR33367", detay: "Ömer Faruk / Büşra Yücel", durum: "Yolda"},
+        {no: "TR55521", detay: "Cem Tan / Osman Güven", durum: "Teslim Edildi"},
+        {no: "TR77703", detay: "Esra Bilgiç / Kerem Can", durum: "Hazırlanıyor"},
+        {no: "TR99981", detay: "Sinan Engin / Berk Atan", durum: "Yolda"},
+        {no: "TR12100", detay: "Emel Sayın / Nihan Soylu", durum: "Teslim Edildi"}
     ];
 
     function render() {
@@ -255,7 +270,7 @@
         }
     }
 
-    // Saat gösterimi
+   
     setInterval(() => {
         const now = new Date();
         document.getElementById("clock").innerText = now.toLocaleString('tr-TR');
