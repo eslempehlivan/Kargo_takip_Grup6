@@ -1,233 +1,550 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Paneli - Kargo Yönetimi</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Admin Paneli – Kargo Takip</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --bg:#0f1117;
+  --surface:rgba(255,255,255,0.05);
+  --surface2:rgba(255,255,255,0.09);
+  --border:rgba(255,255,255,0.11);
+  --blue:#3d8ef0;
+  --green:#22c55e;
+  --yellow:#f59e0b;
+  --red:#ef4444;
+  --text:#e8eaf0;
+  --soft:#8b92a8;
+  --r:13px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;}
+.wrap{max-width:1180px;margin:0 auto;padding:18px;}
+.glass{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);backdrop-filter:blur(10px);}
 
-  <style>
-    /* Buton ve Form Ekstra Stilleri */
-    .btn-history {
-      display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px;
-      background: rgba(61,142,240,.12); color: #3d8ef0; border: 1px solid rgba(61,142,240,.28);
-      border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: .76rem;
-      font-weight: 600; cursor: pointer; text-decoration: none; transition: 0.2s;
-    }
-    .btn-history:hover { background: rgba(61,142,240,.22); transform: translateY(-1px); }
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:13px 20px;margin-bottom:22px;flex-wrap:wrap;gap:10px;}
+.logo{display:flex;align-items:center;gap:9px;color:var(--blue);font-weight:700;font-size:1rem;}
+.logo i{font-size:1.2rem;}
+.nav a{color:var(--soft);text-decoration:none;font-size:.8rem;font-weight:500;margin-left:16px;transition:color .2s;}
+.nav a:hover,.nav a.act{color:var(--blue);}
+.nav a.logout{color:var(--red)!important;}
 
-    .form-group label { font-size: 0.8rem; font-weight: 600; margin-bottom: 5px; display: block; color: var(--text-soft); }
-    .form-input { width: 100%; padding: 10px 10px 10px 35px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.08); background: rgba(255,255,255,0.7); outline: none; font-family: 'Poppins'; }
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px;}
+.stat{padding:20px;text-align:center;}
+.stat i{font-size:1.5rem;margin-bottom:8px;display:block;}
+.stat h3{font-size:1.7rem;font-weight:700;}
+.stat p{color:var(--soft);font-size:.74rem;margin-top:3px;}
 
-    /* Modal Stilleri */
-    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); }
-    .modal-content { background: white; margin: 10% auto; padding: 2rem; border-radius: 15px; width: 90%; max-width: 400px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-    .close-modal { cursor: pointer; font-size: 1.5rem; }
-  </style>
+.tabs{display:flex;gap:8px;margin-bottom:18px;}
+.tab{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:10px 22px;
+  border-radius:10px;
+  border:2px solid rgba(255,255,255,0.13);
+  background:rgba(255,255,255,0.06);
+  color:#c5cad8;         
+  font-family:'Poppins',sans-serif;
+  font-size:.82rem;
+  font-weight:600;
+  cursor:pointer;
+  transition:background .2s,border-color .2s,color .2s,box-shadow .2s;
+  white-space:nowrap;
+}
+.tab:hover{
+  background:rgba(61,142,240,.18);
+  border-color:rgba(61,142,240,.45);
+  color:#fff;
+}
+.tab.on{
+  background:#3d8ef0;
+  border-color:#3d8ef0;
+  color:#ffffff;           
+  box-shadow:0 4px 18px rgba(61,142,240,.4);
+}
+
+
+.sec{display:none;}
+.sec.on{display:block;}
+
+
+.form-wrap{padding:26px;}
+.form-title{font-size:.95rem;font-weight:700;color:var(--blue);display:flex;align-items:center;gap:8px;padding-bottom:14px;margin-bottom:20px;border-bottom:1px solid var(--border);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.fg{display:flex;flex-direction:column;gap:6px;}
+.fg.full{grid-column:1/-1;}
+.fg label{font-size:.75rem;font-weight:600;color:var(--soft);}
+.fg label i{margin-right:4px;}
+.fg input,.fg select,.fg textarea{
+  background:var(--surface2);border:1px solid var(--border);border-radius:9px;
+  padding:10px 13px;color:var(--text);font-family:'Poppins',sans-serif;font-size:.83rem;
+  outline:none;transition:border-color .2s,box-shadow .2s;width:100%;
+}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(61,142,240,.15);}
+.fg select option{background:#1a1d2e;}
+.fg textarea{resize:vertical;min-height:78px;}
+.fg input[readonly]{opacity:.5;cursor:not-allowed;}
+.btn-save{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  width:100%;margin-top:4px;padding:13px;
+  background:var(--blue);color:#fff;border:none;border-radius:10px;
+  font-family:'Poppins',sans-serif;font-size:.88rem;font-weight:700;
+  cursor:pointer;transition:opacity .2s,transform .15s,box-shadow .2s;
+}
+.btn-save:hover{opacity:.88;transform:translateY(-2px);box-shadow:0 6px 22px rgba(61,142,240,.38);}
+
+
+.filters{display:flex;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border);flex-wrap:wrap;align-items:center;}
+.filters input,.filters select{
+  background:var(--surface2);border:1px solid var(--border);border-radius:8px;
+  padding:8px 13px;color:var(--text);font-family:'Poppins',sans-serif;font-size:.78rem;outline:none;
+}
+.filters input{min-width:210px;}
+.filters input::placeholder{color:var(--soft);}
+.filters select option{background:#1a1d2e;}
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+thead tr{border-bottom:1px solid var(--border);}
+th{padding:10px 14px;text-align:left;font-size:.73rem;font-weight:600;color:var(--soft);white-space:nowrap;}
+td{padding:11px 14px;font-size:.81rem;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,0.02);}
+
+.badge{padding:3px 11px;border-radius:20px;font-size:.69rem;font-weight:700;white-space:nowrap;}
+.b-blue  {background:rgba(61,142,240,.15);color:var(--blue);  border:1px solid rgba(61,142,240,.3);}
+.b-yellow{background:rgba(245,158,11,.15);color:var(--yellow);border:1px solid rgba(245,158,11,.3);}
+.b-green {background:rgba(34,197,94,.15); color:var(--green); border:1px solid rgba(34,197,94,.3);}
+
+.acts{display:flex;gap:5px;align-items:center;flex-wrap:wrap;}
+.btn-hist{
+  display:inline-flex;align-items:center;gap:4px;padding:5px 9px;
+  background:rgba(61,142,240,.12);color:var(--blue);
+  border:1px solid rgba(61,142,240,.28);border-radius:7px;
+  font-family:'Poppins',sans-serif;font-size:.7rem;font-weight:600;
+  cursor:pointer;text-decoration:none;transition:all .18s;white-space:nowrap;
+}
+.btn-hist:hover{background:rgba(61,142,240,.22);}
+.btn-upd{
+  display:inline-flex;align-items:center;gap:4px;padding:5px 9px;
+  background:rgba(245,158,11,.12);color:var(--yellow);
+  border:1px solid rgba(245,158,11,.28);border-radius:7px;
+  font-family:'Poppins',sans-serif;font-size:.7rem;font-weight:600;
+  cursor:pointer;transition:all .18s;white-space:nowrap;
+}
+.btn-upd:hover{background:rgba(245,158,11,.22);}
+.btn-del{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:7px;
+  border:1px solid var(--border);background:var(--surface2);color:var(--soft);
+  cursor:pointer;transition:all .18s;font-size:.72rem;
+}
+.btn-del:hover{color:var(--red);border-color:var(--red);background:rgba(239,68,68,.1);}
+
+.pg{display:flex;gap:5px;justify-content:center;padding:14px;}
+.pg-btn{width:30px;height:30px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:var(--soft);font-family:'Poppins',sans-serif;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .18s;}
+.pg-btn.on,.pg-btn:hover{background:var(--blue);color:#fff;border-color:var(--blue);}
+
+
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;}
+.overlay.open{display:flex;}
+.modal{background:#16192a;border:1px solid var(--border);border-radius:var(--r);padding:26px;width:90%;max-width:460px;box-shadow:0 8px 40px rgba(0,0,0,.5);animation:pop .2s ease;}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.mhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.mhdr h3{font-size:.95rem;font-weight:700;color:var(--yellow);display:flex;align-items:center;gap:7px;}
+.mclose{background:none;border:none;color:var(--soft);font-size:1.05rem;cursor:pointer;transition:color .18s;}
+.mclose:hover{color:var(--red);}
+.mbody{display:flex;flex-direction:column;gap:13px;}
+.mrow{display:flex;justify-content:space-between;font-size:.79rem;padding:8px 12px;background:var(--surface2);border-radius:8px;}
+.mrow span:first-child{color:var(--soft);}
+.mlabel{font-size:.76rem;font-weight:600;color:var(--soft);display:block;margin-bottom:5px;}
+.msel,.minp{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:10px 13px;color:var(--text);font-family:'Poppins',sans-serif;font-size:.82rem;outline:none;transition:border-color .2s;}
+.msel:focus,.minp:focus{border-color:var(--yellow);}
+.msel option{background:#1a1d2e;}
+.mfoot{display:flex;gap:9px;margin-top:4px;}
+.mbtn-ok{flex:1;padding:11px;background:var(--yellow);color:#000;border:none;border-radius:9px;font-family:'Poppins',sans-serif;font-size:.84rem;font-weight:700;cursor:pointer;transition:opacity .2s;}
+.mbtn-ok:hover{opacity:.85;}
+.mbtn-no{padding:11px 16px;background:var(--surface2);color:var(--soft);border:1px solid var(--border);border-radius:9px;font-family:'Poppins',sans-serif;font-size:.84rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.mbtn-no:hover{color:var(--text);}
+
+.toast{position:fixed;bottom:24px;right:24px;z-index:9999;background:#1e2235;border:1px solid var(--border);border-radius:11px;padding:12px 18px;display:flex;align-items:center;gap:9px;font-size:.82rem;font-weight:600;box-shadow:0 8px 30px rgba(0,0,0,.4);transform:translateY(70px);opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.ok .ti{color:var(--green);}
+.toast.err .ti{color:var(--red);}
+
+.footer{text-align:center;color:var(--soft);font-size:.73rem;padding:18px 0 6px;}
+
+@media(max-width:700px){
+  .stats{grid-template-columns:1fr 1fr;}
+  .grid2{grid-template-columns:1fr;}
+  .fg.full{grid-column:1;}
+}
+</style>
 </head>
 <body>
-  <div class="page-wrapper">
-    <div class="container">
-      <header class="main-header glass-card">
-        <div class="logo">
-          <i class="fa-solid fa-truck-fast"></i>
-          <h2>Kargo Takip Sistemi</h2>
-        </div>
-        <nav class="nav-links">
-          <a href="index.html">Ana Sayfa</a>
-          <a href="takip-detay.html">Takip Detayı</a>
-          <a href="admin.html" class="active">Admin Paneli</a>
-          <a href='#' onclick="logout()" style="color:red; font-weight: 600;">Çıkış Yap </a>
-        </nav>
-      </header>
+<div class="wrap">
 
-      <h1 class="section-title">Admin Paneli</h1>
+ 
+  <header class="glass hdr">
+    <div class="logo"><i class="fa-solid fa-truck-fast"></i><span>Kargo Takip Sistemi</span></div>
+    <nav class="nav">
+      <a href="index.html">Ana Sayfa</a>
+      <a href="takip-detay.html">Takip Detayı</a>
+      <a href="admin.html" class="act">Admin Paneli</a>
+      <a href="#" onclick="logout()" class="logout">Çıkış Yap</a>
+    </nav>
+  </header>
 
-      <section class="dashboard-top">
-        <div class="glass-card stat-card">
-          <div class="stat-icon" style="color: var(--text-soft);"><i class="fa-solid fa-truck"></i></div>
-          <h3 id="statTotal">1,250</h3>
-          <p>Toplam Kargolar</p>
-        </div>
-        <div class="glass-card stat-card">
-          <div class="stat-icon" style="color: var(--green);"><i class="fa-solid fa-circle-check"></i></div>
-          <h3>980</h3>
-          <p>Teslim Edilen</p>
-        </div>
-      </section>
+  <h1 style="font-size:1.35rem;font-weight:700;margin-bottom:18px;">Admin Paneli</h1>
 
-      <section class="glass-card form-section" style="margin-bottom: 2rem; padding: 1.5rem;">
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
-          <i class="fa-solid fa-square-plus" style="color: var(--blue); font-size: 1.2rem;"></i>
-          <h3 style="margin: 0; font-size: 1.1rem; font-weight: 600;">Yeni Kargo Kaydı Oluştur</h3>
-        </div>
-
-        <form id="addCargoForm" onsubmit="addCargo(event)" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
-          <div class="form-group">
-            <label>Takip Numarası</label>
-            <div style="position: relative;">
-              <i class="fa-solid fa-hashtag" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; color: #aaa;"></i>
-              <input type="text" id="kargoNo" class="form-input" placeholder="Örn: 502931" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Gönderici</label>
-            <div style="position: relative;">
-              <i class="fa-solid fa-user-arrow-up" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; color: #aaa;"></i>
-              <input type="text" id="gonderici" class="form-input" placeholder="Ad Soyad" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Alıcı</label>
-            <div style="position: relative;">
-              <i class="fa-solid fa-user-arrow-down" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; color: #aaa;"></i>
-              <input type="text" id="alici" class="form-input" placeholder="Ad Soyad" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Durum</label>
-            <div style="position: relative;">
-              <i class="fa-solid fa-box-open" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; color: #aaa;"></i>
-              <select id="durum" class="form-input" style="appearance: none; cursor: pointer;">
-                <option value="Hazırlanıyor">Hazırlanıyor</option>
-                <option value="Yolda">Yolda</option>
-                <option value="Teslim Edildi">Teslim Edildi</option>
-              </select>
-            </div>
-          </div>
-          <button type="submit" class="btn-save" style="background: #3d8ef0; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: auto;">
-            <i class="fa-solid fa-paper-plane"></i> Kaydet
-          </button>
-        </form>
-      </section>
-
-      <section class="glass-card table-card">
-        <div class="table-wrap">
-          <table id="cargoTable">
-            <thead>
-              <tr>
-                <th>Takip No</th>
-                <th>Gönderici</th>
-                <th>Alıcı</th>
-                <th>Durum</th>
-                <th>İşlemler</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>123456</td>
-                <td>Ahmet Yılmaz</td>
-                <td>Ayşe Demir</td>
-                <td><span class="badge badge-blue">Yolda</span></td>
-                <td>
-                  <div class="actions">
-                    <button class="btn btn-secondary btn-icon" onclick="openUpdateModal('123456', 'Yolda')"><i class="fa-solid fa-pen"></i></button>
-                    <button class="btn btn-danger btn-icon" onclick="this.closest('tr').remove()"><i class="fa-solid fa-trash"></i></button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <footer class="footer">Kargo Takip Sistemi © 2026</footer>
-    </div>
+  
+  <div class="stats">
+    <div class="glass stat"><i class="fa-solid fa-truck" style="color:var(--soft);"></i><h3 id="sTotal">0</h3><p>Toplam</p></div>
+    <div class="glass stat"><i class="fa-solid fa-circle-check" style="color:var(--green);"></i><h3 id="sDel">0</h3><p>Teslim Edilen</p></div>
+    <div class="glass stat"><i class="fa-solid fa-truck-fast" style="color:var(--blue);"></i><h3 id="sWay">0</h3><p>Yolda</p></div>
+    <div class="glass stat"><i class="fa-solid fa-box-open" style="color:var(--yellow);"></i><h3 id="sPrep">0</h3><p>Hazırlanıyor</p></div>
   </div>
 
-  <div id="updateModal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>Durum Güncelle</h3>
-        <span class="close-modal" onclick="closeModal()">&times;</span>
+ 
+  <div class="tabs">
+    <button class="tab on" id="tablist" onclick="goTab('list')">
+      <i class="fa-solid fa-list"></i> Kargo Listesi
+    </button>
+    <button class="tab" id="tabadd" onclick="goTab('add')">
+      <i class="fa-solid fa-plus"></i> Yeni Kargo Ekle
+    </button>
+  </div>
+
+  
+  <div class="sec on" id="sec-list">
+    <div class="glass">
+      <div class="filters">
+        <input type="text" id="srch" placeholder="🔍  Takip no, gönderici, alıcı..." oninput="doFilter()">
+        <select id="fSt" onchange="doFilter()">
+          <option value="">Durum: Tümü</option>
+          <option>Hazırlanıyor</option>
+          <option>Yolda</option>
+          <option>Teslim Edildi</option>
+        </select>
       </div>
-      <p>Kargo No: <strong id="modalKargoNo"></strong></p>
-      <select id="newStatus" class="form-input" style="margin-top: 15px;">
-        <option value="Hazırlanıyor">Hazırlanıyor</option>
-        <option value="Yolda">Yolda</option>
-        <option value="Teslim Edildi">Teslim Edildi</option>
-      </select>
-      <button onclick="saveNewStatus()" class="btn-save" style="width: 100%; margin-top: 20px; background: #2ecc71;">Güncelle</button>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Takip No</th>
+            <th>Gönderici</th>
+            <th>Alıcı</th>
+            <th>Güzergah</th>
+            <th>Ağırlık</th>
+            <th>Durum</th>
+            <th>İşlemler</th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <div class="pg" id="pg"></div>
     </div>
   </div>
 
-  <script>
-    // Giriş Kontrolü
-    if(localStorage.getItem("login") !== "true"){
-      window.location.href = "admin-login.html";
-    }
+ 
+  <div class="sec" id="sec-add">
+    <div class="glass">
+      <div class="form-wrap">
+        <div class="form-title"><i class="fa-solid fa-box-open"></i> Yeni Kargo Bilgileri</div>
+        <div class="grid2">
 
-    function logout(){
-      localStorage.removeItem("login");
-      window.location.href = "admin-login.html";
-    }
-
-    // YENİ KARGO EKLEME FONKSİYONU
-    function addCargo(event) {
-      event.preventDefault();
-      
-      const no = document.getElementById('kargoNo').value;
-      const gon = document.getElementById('gonderici').value;
-      const ali = document.getElementById('alici').value;
-      const dur = document.getElementById('durum').value;
-
-      let badge = dur === "Teslim Edildi" ? "badge-green" : (dur === "Yolda" ? "badge-blue" : "badge-yellow");
-
-      const table = document.getElementById('cargoTable').getElementsByTagName('tbody')[0];
-      const row = table.insertRow(0); // En üste ekle
-      
-      row.innerHTML = `
-        <td>${no}</td>
-        <td>${gon}</td>
-        <td>${ali}</td>
-        <td><span class="badge ${badge}">${dur}</span></td>
-        <td>
-          <div class="actions">
-            <button class="btn btn-secondary btn-icon" onclick="openUpdateModal('${no}', '${dur}')"><i class="fa-solid fa-pen"></i></button>
-            <button class="btn btn-danger btn-icon" onclick="this.closest('tr').remove()"><i class="fa-solid fa-trash"></i></button>
+          <div class="fg">
+            <label><i class="fa-solid fa-hashtag" style="color:var(--blue);"></i> Takip Numarası</label>
+            <input type="text" id="fNo" readonly>
           </div>
-        </td>
-      `;
+          <div class="fg">
+            <label><i class="fa-solid fa-tag" style="color:var(--blue);"></i> Kargo Türü</label>
+            <select id="fType">
+              <option>Standart</option><option>Hızlı</option>
+              <option>Kargo</option><option>Ağır Yük</option>
+            </select>
+          </div>
 
-      document.getElementById('addCargoForm').reset();
-      alert("Kargo listeye eklendi!");
-    }
+          <div class="fg">
+            <label><i class="fa-solid fa-user" style="color:var(--green);"></i> Gönderici Adı *</label>
+            <input type="text" id="fSender" placeholder="Ad Soyad">
+          </div>
+          <div class="fg">
+            <label><i class="fa-solid fa-phone" style="color:var(--green);"></i> Gönderici Telefon</label>
+            <input type="text" id="fSenderTel" placeholder="0555 000 00 00">
+          </div>
 
-    // MODAL YÖNETİMİ
-    let currentEditRow = null;
+          <div class="fg">
+            <label><i class="fa-solid fa-user-check" style="color:var(--yellow);"></i> Alıcı Adı *</label>
+            <input type="text" id="fReceiver" placeholder="Ad Soyad">
+          </div>
+          <div class="fg">
+            <label><i class="fa-solid fa-phone" style="color:var(--yellow);"></i> Alıcı Telefon</label>
+            <input type="text" id="fReceiverTel" placeholder="0555 000 00 00">
+          </div>
 
-    function openUpdateModal(no, status) {
-      document.getElementById('modalKargoNo').innerText = no;
-      document.getElementById('newStatus').value = status;
-      document.getElementById('updateModal').style.display = 'block';
-      
-      // Düzenlenecek satırı bul
-      const rows = document.querySelectorAll("#cargoTable tbody tr");
-      rows.forEach(row => {
-        if(row.cells[0].innerText === no) currentEditRow = row;
-      });
-    }
+          <div class="fg">
+            <label><i class="fa-solid fa-map-pin" style="color:var(--red);"></i> Çıkış Şehri *</label>
+            <input type="text" id="fFrom" placeholder="İstanbul">
+          </div>
+          <div class="fg">
+            <label><i class="fa-solid fa-location-dot" style="color:var(--red);"></i> Varış Şehri *</label>
+            <input type="text" id="fTo" placeholder="Ankara">
+          </div>
 
-    function closeModal() {
-      document.getElementById('updateModal').style.display = 'none';
-    }
+          <div class="fg">
+            <label><i class="fa-solid fa-weight-hanging" style="color:var(--soft);"></i> Ağırlık (kg) *</label>
+            <input type="number" id="fWeight" placeholder="1.5" min="0.1" step="0.1">
+          </div>
+          <div class="fg">
+            <label><i class="fa-solid fa-circle-half-stroke" style="color:var(--soft);"></i> Başlangıç Durumu</label>
+            <select id="fStatus">
+              <option>Hazırlanıyor</option>
+              <option>Yolda</option>
+              <option>Teslim Edildi</option>
+            </select>
+          </div>
 
-    function saveNewStatus() {
-      const newStatus = document.getElementById('newStatus').value;
-      let badge = newStatus === "Teslim Edildi" ? "badge-green" : (newStatus === "Yolda" ? "badge-blue" : "badge-yellow");
-      
-      if(currentEditRow) {
-        currentEditRow.cells[3].innerHTML = `<span class="badge ${badge}">${newStatus}</span>`;
-        // Modal içindeki fonksiyonu güncellemek için parametreyi de yeniliyoruz
-        currentEditRow.cells[4].querySelector('.btn-secondary').setAttribute('onclick', `openUpdateModal('${currentEditRow.cells[0].innerText}', '${newStatus}')`);
-      }
-      closeModal();
-    }
-  </script>
+          <div class="fg full">
+            <label><i class="fa-solid fa-note-sticky" style="color:var(--soft);"></i> Not / Açıklama</label>
+            <textarea id="fNote" placeholder="Kargo hakkında ek bilgi..."></textarea>
+          </div>
+
+          <div class="fg full">
+            <button class="btn-save" onclick="addCargo()">
+              <i class="fa-solid fa-plus"></i> Kargoyu Kaydet
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">Kargo Takip Sistemi © 2026</footer>
+</div>
+
+
+<div class="overlay" id="modal">
+  <div class="modal">
+    <div class="mhdr">
+      <h3><i class="fa-solid fa-pen-to-square"></i> Durum Güncelle</h3>
+      <button class="mclose" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="mbody">
+      <div class="mrow"><span>Takip No</span><span id="mNo" style="color:var(--blue);font-weight:700;"></span></div>
+      <div class="mrow"><span>Taraflar</span><span id="mPersons" style="font-weight:600;"></span></div>
+      <div>
+        <label class="mlabel">Yeni Durum</label>
+        <select class="msel" id="mStatus">
+          <option>Hazırlanıyor</option>
+          <option>Yolda</option>
+          <option>Teslim Edildi</option>
+        </select>
+      </div>
+      <div>
+        <label class="mlabel">Güncelleme Notu (opsiyonel)</label>
+        <input class="minp" type="text" id="mNote" placeholder="Örn: Şube deposuna ulaştı">
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="mbtn-no" onclick="closeModal()">İptal</button>
+      <button class="mbtn-ok" onclick="saveStatus()">
+        <i class="fa-solid fa-floppy-disk" style="margin-right:5px;"></i>Kaydet
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="toast" id="toast">
+  <span class="ti" id="tIcon"></span>
+  <span id="tMsg"></span>
+</div>
+
+<script>
+
+let cargos = JSON.parse(localStorage.getItem('kts_cargos') || 'null') || [
+  {id:'123456',sender:'Ahmet Yılmaz',senderTel:'0532 100 10 10',receiver:'Ayşe Demir',receiverTel:'0533 200 20 20',fromCity:'İstanbul',toCity:'Ankara',weight:2.5,type:'Standart',status:'Yolda',note:''},
+  {id:'654321',sender:'Mehmet Kaya',senderTel:'0541 300 30 30',receiver:'Zeynep Çelik',receiverTel:'0542 400 40 40',fromCity:'İzmir',toCity:'Bursa',weight:1.2,type:'Hızlı',status:'Hazırlanıyor',note:''},
+  {id:'987654',sender:'Elif Şahin',senderTel:'0551 500 50 50',receiver:'Can Aydın',receiverTel:'0552 600 60 60',fromCity:'Antalya',toCity:'İstanbul',weight:5.0,type:'Kargo',status:'Teslim Edildi',note:''},
+  {id:'112233',sender:'Mustafa Yücel',senderTel:'0561 700 70 70',receiver:'Fatma Keskin',receiverTel:'0562 800 80 80',fromCity:'Konya',toCity:'Eskişehir',weight:0.8,type:'Standart',status:'Yolda',note:''},
+  {id:'445566',sender:'Büşra Aslan',senderTel:'0505 100 20 30',receiver:'Volkan Sönmez',receiverTel:'0506 200 30 40',fromCity:'Samsun',toCity:'Trabzon',weight:3.3,type:'Ağır Yük',status:'Hazırlanıyor',note:''},
+  {id:'778899',sender:'Emre Polat',senderTel:'0507 300 40 50',receiver:'Gizem Tekin',receiverTel:'0508 400 50 60',fromCity:'Gaziantep',toCity:'Adana',weight:1.7,type:'Hızlı',status:'Teslim Edildi',note:''},
+  {id:'334455',sender:'Selin Doğan',senderTel:'0511 500 60 70',receiver:'Burak Yıldırım',receiverTel:'0512 600 70 80',fromCity:'Kayseri',toCity:'Malatya',weight:4.1,type:'Kargo',status:'Yolda',note:''},
+  {id:'667788',sender:'Ozan Güler',senderTel:'0521 700 80 90',receiver:'Merve Aslan',receiverTel:'0522 800 90 00',fromCity:'Diyarbakır',toCity:'Van',weight:2.0,type:'Standart',status:'Hazırlanıyor',note:''},
+  {id:'401905',sender:'Arda Aslan',senderTel:'0530 100 00 00',receiver:'Ela Yılmaz',receiverTel:'0531 200 00 00',fromCity:'Ankara',toCity:'İzmir',weight:0.5,type:'Hızlı',status:'Hazırlanıyor',note:''},
+];
+let filtered=[...cargos], page=1, perPage=6, editId=null;
+const save = () => localStorage.setItem('kts_cargos', JSON.stringify(cargos));
+
+
+function goTab(t) {
+  ['list','add'].forEach(id => {
+    document.getElementById('sec-'+id).classList.toggle('on', id===t);
+    document.getElementById('tab'+id).classList.toggle('on', id===t);
+  });
+  if(t==='list') render();
+}
+
+
+function stats() {
+  document.getElementById('sTotal').textContent = cargos.length;
+  document.getElementById('sDel').textContent   = cargos.filter(c=>c.status==='Teslim Edildi').length;
+  document.getElementById('sWay').textContent   = cargos.filter(c=>c.status==='Yolda').length;
+  document.getElementById('sPrep').textContent  = cargos.filter(c=>c.status==='Hazırlanıyor').length;
+}
+
+
+function doFilter() {
+  const q  = document.getElementById('srch').value.toLowerCase();
+  const st = document.getElementById('fSt').value;
+  filtered = cargos.filter(c => {
+    const mq = !q || c.id.includes(q) || c.sender.toLowerCase().includes(q) || c.receiver.toLowerCase().includes(q);
+    const ms = !st || c.status === st;
+    return mq && ms;
+  });
+  page = 1; render();
+}
+
+
+function badge(s) {
+  const m = {Yolda:'b-blue', Hazırlanıyor:'b-yellow', 'Teslim Edildi':'b-green'};
+  return `<span class="badge ${m[s]||'b-blue'}">${s}</span>`;
+}
+
+
+function render() {
+  stats();
+  const tbody = document.getElementById('tbody');
+  const sl    = filtered.slice((page-1)*perPage, page*perPage);
+
+  if(!sl.length){
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--soft);padding:28px;">Kargo bulunamadı.</td></tr>`;
+    document.getElementById('pg').innerHTML = '';
+    return;
+  }
+
+  tbody.innerHTML = sl.map(c => `
+    <tr>
+      <td style="font-weight:700;color:var(--blue);">${c.id}</td>
+      <td>${c.sender}</td>
+      <td>${c.receiver}</td>
+      <td style="color:var(--soft);font-size:.78rem;">${c.fromCity} → ${c.toCity}</td>
+      <td style="color:var(--soft);">${c.weight} kg</td>
+      <td>${badge(c.status)}</td>
+      <td><div class="acts">
+        <a href="kargo-gecmis.html?kargoNo=${c.id}" class="btn-hist">
+          <i class="fa-solid fa-clock-rotate-left"></i> Geçmiş
+        </a>
+        <button class="btn-upd" onclick="openModal('${c.id}')">
+          <i class="fa-solid fa-pen-to-square"></i> Durum
+        </button>
+        <button class="btn-del" onclick="delCargo('${c.id}')" title="Sil">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div></td>
+    </tr>`).join('');
+
+  const total = Math.ceil(filtered.length / perPage);
+  document.getElementById('pg').innerHTML = total <= 1 ? '' :
+    Array.from({length:total}, (_,i) =>
+      `<button class="pg-btn${i+1===page?' on':''}" onclick="goPg(${i+1})">${i+1}</button>`
+    ).join('');
+}
+function goPg(n){ page=n; render(); }
+
+
+function delCargo(id){
+  if(!confirm(id+' numaralı kargoyu silmek istediğinize emin misiniz?')) return;
+  cargos = cargos.filter(c=>c.id!==id);
+  save(); doFilter();
+  toast('Kargo silindi.','ok');
+}
+
+
+function genId(){ return String(Math.floor(100000+Math.random()*900000)); }
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('fNo').value = genId();
+  render();
+});
+
+function addCargo(){
+  const g = id => document.getElementById(id).value.trim();
+  const sender   = g('fSender');
+  const receiver = g('fReceiver');
+  const fromCity = g('fFrom');
+  const toCity   = g('fTo');
+  const weight   = parseFloat(document.getElementById('fWeight').value);
+
+  if(!sender||!receiver||!fromCity||!toCity||!weight){
+    toast('Lütfen * ile işaretli alanları doldurun!','err'); return;
+  }
+
+  cargos.unshift({
+    id       : document.getElementById('fNo').value,
+    sender, senderTel  : g('fSenderTel'),
+    receiver, receiverTel: g('fReceiverTel'),
+    fromCity, toCity, weight,
+    type   : document.getElementById('fType').value,
+    status : document.getElementById('fStatus').value,
+    note   : g('fNote'),
+  });
+  save();
+
+  ['fSender','fSenderTel','fReceiver','fReceiverTel','fFrom','fTo','fNote'].forEach(id => document.getElementById(id).value='');
+  document.getElementById('fWeight').value = '';
+  document.getElementById('fNo').value = genId();
+  document.getElementById('fStatus').value = 'Hazırlanıyor';
+
+  toast('Kargo başarıyla eklendi! ✓','ok');
+  setTimeout(() => { doFilter(); goTab('list'); }, 900);
+}
+
+
+function openModal(id){
+  const c = cargos.find(x=>x.id===id); if(!c) return;
+  editId = id;
+  document.getElementById('mNo').textContent      = c.id;
+  document.getElementById('mPersons').textContent = c.sender+' → '+c.receiver;
+  document.getElementById('mStatus').value        = c.status;
+  document.getElementById('mNote').value          = '';
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(){
+  document.getElementById('modal').classList.remove('open');
+  editId = null;
+}
+function saveStatus(){
+  if(!editId) return;
+  const c = cargos.find(x=>x.id===editId); if(!c) return;
+  c.status = document.getElementById('mStatus').value;
+  const n  = document.getElementById('mNote').value.trim();
+  if(n) c.note = n;
+  save(); closeModal(); doFilter();
+  toast('Durum güncellendi!','ok');
+}
+
+
+let tt;
+function toast(msg, type){
+  const el = document.getElementById('toast');
+  document.getElementById('tIcon').innerHTML = type==='ok'
+    ? '<i class="fa-solid fa-circle-check"></i>'
+    : '<i class="fa-solid fa-circle-exclamation"></i>';
+  document.getElementById('tMsg').textContent = msg;
+  el.className = 'toast show '+type;
+  clearTimeout(tt);
+  tt = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+
+function logout(){
+  localStorage.removeItem('login');
+  window.location.href = 'admin-login.html';
+}
+</script>
 </body>
 </html>
