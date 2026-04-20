@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kargo Takip Detayı</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<div class="page-wrapper">
+<div class="container">
+
+
+<header class="main-header glass-card">
+
+  <div class="logo">
+    <i class="fa-solid fa-truck-fast"></i>
+    <h2>Kargo Takip Sistemi</h2>
+  </div>
+
+  <nav class="nav-links">
+    <a href="index.html">Ana Sayfa</a>
+    <a href="takip-detay.html" class="active">Takip Detayı</a>
+    <a href="admin-login.html">Admin Paneli</a>
+  </nav>
+
+</header>
+
+
+<section class="glass-card detail-card">
+
+  <a href="index.html" class="back-link">
+    <i class="fa-solid fa-arrow-left"></i> Geri Dön
+  </a>
+
+  <h1 class="detail-header">Kargo Takip Detayı</h1>
+
+  <div class="info-box"></div>
+
+  <div class="status-box">
+    <h3>Durum:</h3>
+    <p>Tahmini Teslim Tarihi: <span id="teslimTarihi"></span></p>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-line">
+      <div class="progress-line-fill"></div>
+    </div>
+
+    <div class="progress-steps">
+      <div class="step">
+        <div class="step-circle"><i class="fa-solid fa-check"></i></div>
+        <p>Hazırlanıyor</p>
+      </div>
+
+      <div class="step">
+        <div class="step-circle"><i class="fa-solid fa-check"></i></div>
+        <p>Yolda</p>
+      </div>
+
+      <div class="step">
+        <div class="step-circle"><i class="fa-solid fa-check"></i></div>
+        <p>Teslim Edildi</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="map-box" style="padding:0; overflow:hidden; border-radius:12px;">
+    <iframe id="kargoHarita" width="100%" height="300" style="border:0;"></iframe>
+  </div>
+
+</section>
+
+<footer class="footer">
+  Kargo Takip Sistemi © 2026
+</footer>
+
+</div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const kargoNo = params.get("kargoNo");
+
+const kargolar = {
+  "123456": { gonderici: "Ahmet Yılmaz", alici: "Ayşe Demir", durum: "Yolda", koordinat: "40.9918,29.0283" },
+  "654321": { gonderici: "Mehmet Kaya", alici: "Zeynep Çelik", durum: "Hazırlanıyor", koordinat: "39.9208,32.8541" },
+  "987654": { gonderici: "Elif Şahin", alici: "Can Aydın", durum: "Teslim Edildi", koordinat: "38.4622,27.2161" },
+  "112233": { gonderici: "Mustafa Yücel", alici: "Fatma Keskin", durum: "Yolda", koordinat: "40.2117,28.9592" },
+  "445566": { gonderici: "Büşra Aslan", alici: "Volkan Sönmez", durum: "Hazırlanıyor", koordinat: "36.8841,30.7056" },
+  "778899": { gonderici: "Emre Polat", alici: "Gizem Tekin", durum: "Teslim Edildi", koordinat: "39.7767,30.5206" },
+  "334455": { gonderici: "Selin Doğan", alici: "Burak Yıldırım", durum: "Yolda", koordinat: "36.9914,35.3308" },
+  "667788": { gonderici: "Ozan Güler", alici: "Merve Aslan", durum: "Hazırlanıyor", koordinat: "41.0027,39.7168" },
+  "401905": { gonderici: "Arda Aslan", alici: "Ela Vardar", durum: "Yolda", koordinat: "41.0082,28.9784" }
+};
+
+const infoBox = document.querySelector(".info-box");
+const statusText = document.querySelector(".status-box h3");
+const mapFrame = document.getElementById("kargoHarita");
+const steps = document.querySelectorAll(".step");
+const teslimSpan = document.getElementById("teslimTarihi");
+const progressFill = document.querySelector(".progress-line-fill");
+
+if (kargoNo && kargolar[kargoNo]) {
+
+  const kargo = kargolar[kargoNo];
+
+  infoBox.innerHTML = `
+    <p><strong>Takip Numarası:</strong> ${kargoNo}</p>
+    <p><strong>Gönderici:</strong> ${kargo.gonderici}</p>
+    <p><strong>Alıcı:</strong> ${kargo.alici}</p>
+  `;
+
+  statusText.textContent = "Durum: " + kargo.durum;
+
+  mapFrame.src = `https://maps.google.com/maps?q=${kargo.koordinat}&hl=tr&z=14&output=embed`;
+
+  const durumIndex = {
+    "Hazırlanıyor": 0,
+    "Yolda": 1,
+    "Teslim Edildi": 2
+  };
+
+  const index = durumIndex[kargo.durum];
+
+  steps.forEach((step, i) => {
+    step.classList.toggle("active", i <= index);
+  });
+
+  const progressWidth = ["0%", "50%", "100%"];
+  progressFill.style.width = progressWidth[index];
+
+  let bugun = new Date();
+  let teslimTarihi = new Date();
+
+  if (kargo.durum === "Hazırlanıyor") {
+    teslimTarihi.setDate(bugun.getDate() + 3);
+  } else if (kargo.durum === "Yolda") {
+    teslimTarihi.setDate(bugun.getDate() + 1);
+  }
+
+  teslimSpan.textContent = teslimTarihi.toLocaleDateString("tr-TR");
+
+} else {
+  infoBox.innerHTML = `<p style="color:red; text-align:center;">Hatalı Numara Bulunamadı ❌</p>`;
+  document.querySelector(".status-box").style.display = "none";
+  document.querySelector(".progress-wrap").style.display = "none";
+  document.querySelector(".map-box").style.display = "none";
+}
+</script>
+
+</body>
+</html>

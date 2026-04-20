@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kargo Takip Sistemi</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 10, 28, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: 0.35s ease;
+      z-index: 9999;
+      padding: 24px;
+    }
+
+    .loading-overlay.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .loading-card {
+      width: 100%;
+      max-width: 760px;
+      padding: 34px 28px 30px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(7, 24, 61, 0.98), rgba(4, 18, 46, 0.98));
+      border: 1px solid rgba(92, 136, 219, 0.22);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .loading-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(58, 114, 255, 0.10), transparent 26%),
+        radial-gradient(circle at bottom left, rgba(0, 149, 255, 0.08), transparent 28%);
+      pointer-events: none;
+    }
+
+    .loading-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(22, 189, 98, 0.14);
+      color: #52f294;
+      border: 1px solid rgba(63, 224, 127, 0.22);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .loading-badge .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #28d96f;
+      box-shadow: 0 0 12px rgba(40, 217, 111, 0.9);
+      animation: blinkDot 1.2s infinite;
+    }
+
+    @keyframes blinkDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.9); }
+    }
+
+    .loading-card h3 {
+      font-size: 30px;
+      color: #ffffff;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .loading-card p {
+      color: #c7d7fb;
+      font-size: 16px;
+      line-height: 1.7;
+      position: relative;
+      z-index: 2;
+    }
+
+    .loading-number {
+      color: #7eb6ff;
+      font-weight: 700;
+    }
+
+    .loading-visual {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      margin: 28px auto 22px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(89, 136, 219, 0.18);
+      background: #071a44;
+    }
+
+    .loading-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.92) saturate(1.05);
+    }
+
+    .loading-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg,
+          rgba(255,255,255,0) 0%,
+          rgba(120,180,255,0.10) 35%,
+          rgba(255,255,255,0.18) 50%,
+          rgba(120,180,255,0.10) 65%,
+          rgba(255,255,255,0) 100%);
+      transform: translateX(-100%);
+      animation: sweepLight 2.2s ease-in-out infinite;
+    }
+
+    @keyframes sweepLight {
+      0% {
+        transform: translateX(-100%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+
+    .loading-progress {
+      width: 100%;
+      max-width: 620px;
+      margin: 0 auto 18px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .loading-progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      color: #dbe6ff;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .loading-progress-bar {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.10);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .loading-progress-fill {
+      width: 0;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #59e39a, #2d8fff);
+      box-shadow: 0 0 18px rgba(45, 143, 255, 0.32);
+      animation: fillBar 2.5s ease forwards;
+    }
+
+    @keyframes fillBar {
+      0%   { width: 0%; }
+      20%  { width: 22%; }
+      45%  { width: 48%; }
+      70%  { width: 76%; }
+      100% { width: 100%; }
+    }
+
+    .loading-steps {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .loading-step {
+      flex: 1;
+      text-align: center;
+      color: #dbe6ff;
+    }
+
+    .loading-step-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      background: rgba(6, 24, 57, 0.92);
+      border: 2px solid rgba(255, 255, 255, 0.14);
+      color: #9fb4df;
+    }
+
+    .loading-step.done .loading-step-icon {
+      color: #62ea9e;
+      border-color: rgba(75, 230, 145, 0.42);
+      box-shadow: 0 0 18px rgba(75, 230, 145, 0.12);
+    }
+
+    .loading-step.active .loading-step-icon {
+      color: #4ea2ff;
+      border-color: rgba(65, 150, 255, 0.42);
+      box-shadow: 0 0 18px rgba(65, 150, 255, 0.14);
+    }
+
+    .loading-step span {
+      font-size: 14px;
+      line-height: 1.4;
+      display: block;
+    }
+
+    .loading-note {
+      position: relative;
+      z-index: 2;
+      margin-top: 18px;
+      color: #9fb4df;
+      font-size: 14px;
+    }
+
+    body.loading-active {
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .loading-card {
+        padding: 26px 18px 24px;
+      }
+
+      .loading-card h3 {
+        font-size: 24px;
+      }
+
+      .loading-visual {
+        height: 220px;
+      }
+
+      .loading-steps {
+        gap: 10px;
+      }
+
+      .loading-step-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+
+      .loading-step span {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="container">
+
+      <header class="main-header">
+        <div class="logo">
+          <i class="fa-solid fa-truck-fast"></i>
+          <h2>Kargo Takip Sistemi</h2>
+        </div>
+
+        <nav class="nav-links">
+          <a href="index.html" class="active">Ana Sayfa</a>
+          <a href="takip-detay.html">Takip Detayı</a>
+          <a href="admin-login.html">Admin Paneli</a>
+        </nav>
+      </header>
+
+      <section class="hero-grid">
+
+        <div class="panel-card left-panel">
+          <div class="left-top">
+            <div class="big-icon">
+              <i class="fa-solid fa-truck"></i>
+            </div>
+
+            <h1>Kargo Takip Sistemi</h1>
+            <div class="divider"></div>
+            <p class="subtitle">Takip Numaranızı Giriniz</p>
+
+            <form id="trackForm" class="track-form">
+              <div class="search-box">
+                <input type="text" id="kargoNoInput" name="kargoNo" placeholder="Takip Numarası" required />
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </div>
+
+              <button type="submit" class="primary-btn">Sorgula</button>
+            </form>
+          </div>
+
+          <div class="feature-row">
+            <div class="feature-item">
+              <div class="feature-circle orange">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <p>Kargonuzu<br>Takip Edin</p>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-circle green">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <p>Hızlı ve<br>Güvenli</p>
+            </div>
+
+            <div class="feature-item">
+              <div class="feature-circle blue">
+                <i class="fa-solid fa-box"></i>
+              </div>
+              <p>Kolay<br>Teslimat</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card middle-panel">
+          <div class="live-badge">
+            <span class="dot"></span>
+            CANLI
+          </div>
+
+          <h2>Anlık Takip</h2>
+          <p class="middle-desc">
+            Gönderinizin güncel durumunu anlık olarak<br>
+            takip edin.
+          </p>
+
+          <div class="map-visual image-map-visual">
+            <img src="anlik-takip.jpeg" alt="Anlık takip görseli" class="track-visual-image">
+          </div>
+
+          <div class="status-steps">
+            <div class="step-item done">
+              <div class="step-icon">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <span>Hazırlanıyor</span>
+            </div>
+
+            <div class="step-line active"></div>
+
+            <div class="step-item active">
+              <div class="step-icon">
+                <i class="fa-solid fa-truck-fast"></i>
+              </div>
+              <span>Yolda</span>
+            </div>
+
+            <div class="step-line"></div>
+
+            <div class="step-item">
+              <div class="step-icon">
+                <i class="fa-solid fa-box-open"></i>
+              </div>
+              <span>Teslim Edildi</span>
+            </div>
+          </div>
+
+          <div class="last-move-card">
+            <div>
+              <h4>Son Hareket</h4>
+              <div class="move-line">
+                <span class="move-dot"></span>
+                <p>Transfer merkezine ulaştı.</p>
+              </div>
+              <small>17 Mayıs 2026 - 14:32</small>
+            </div>
+            <button class="mini-btn" type="button">Güncel</button>
+          </div>
+
+          <a href="takip-detay.html" class="detail-btn">
+            <span>Tüm Detayları Gör</span>
+            <i class="fa-solid fa-angle-right"></i>
+          </a>
+        </div>
+
+       <div class="panel-card right-panel">
+  <h2>Neden Bizi Tercih Etmelisiniz?</h2>
+  <p class="right-desc">
+    Kargonuzu hızlı, güvenli ve kolay şekilde takip edin.
+    Tüm süreç boyunca güncel bilgilere tek ekrandan ulaşın.
+  </p>
+
+  <div class="service-list">
+    <div class="service-item">
+      <div class="service-icon orange">
+        <i class="fa-solid fa-bolt"></i>
+      </div>
+      <div>
+        <h4>Hızlı Sorgulama</h4>
+        <p>Takip numaranız ile saniyeler içinde kargo durumunu görüntüleyin.</p>
+      </div>
+    </div>
+
+    <div class="service-item">
+      <div class="service-icon blue">
+        <i class="fa-solid fa-location-dot"></i>
+      </div>
+      <div>
+        <h4>Anlık Konum Bilgisi</h4>
+        <p>Kargonuzun bulunduğu noktayı ve hareket sürecini kolayca inceleyin.</p>
+      </div>
+    </div>
+
+    <div class="service-item">
+      <div class="service-icon green">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div>
+        <h4>Güvenli Teslimat</h4>
+        <p>Teslimat sürecindeki güncellemeleri düzenli şekilde takip edin.</p>
+      </div>
+    </div>
+
+    <div class="service-item">
+      <div class="service-icon purple">
+        <i class="fa-solid fa-clock"></i>
+      </div>
+      <div>
+        <h4>Zamanında Bilgilendirme</h4>
+        <p>Tahmini teslim tarihi ve son hareket bilgilerini anında görün.</p>
+      </div>
+    </div>
+  </div>
+
+  <a href="takip-detay.html" class="admin-btn">
+    <span>Takip Detayına Git</span>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            <div class="stats-box">
+              <span>Toplam Kargo</span>
+              <strong>128</strong>
+              <div class="increase">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                12%
+              </div>
+              <small>Bu ayki artış</small>
+            </div>
+          </div>
+
+          <div class="admin-list">
+            <div class="admin-item">
+              <div class="admin-icon blue">
+                <i class="fa-solid fa-circle-plus"></i>
+              </div>
+              <div>
+                <h4>Gönderi Ekle</h4>
+                <p>Yeni kargo kaydı oluşturun</p>
+              </div>
+            </div>
+
+            <div class="admin-item">
+              <div class="admin-icon purple">
+                <i class="fa-solid fa-list-check"></i>
+              </div>
+              <div>
+                <h4>Gönderileri Yönet</h4>
+                <p>Tüm gönderilerinizi görüntüleyin</p>
+              </div>
+            </div>
+
+            <div class="admin-item">
+              <div class="admin-icon green">
+                <i class="fa-solid fa-rotate"></i>
+              </div>
+              <div>
+                <h4>Durum Güncelle</h4>
+                <p>Kargo durumlarını güncelleyin</p>
+              </div>
+            </div>
+
+            <div class="admin-item">
+              <div class="admin-icon orange">
+                <i class="fa-solid fa-chart-column"></i>
+              </div>
+              <div>
+                <h4>Rapor & İstatistik</h4>
+                <p>Detaylı raporlar ve analizler</p>
+              </div>
+            </div>
+          </div>
+
+          <a href="admin-login.html" class="admin-btn">
+            <span>Admin Paneline Giriş</span>
+            <i class="fa-solid fa-angle-right"></i>
+          </a>
+        </div>
+      </section>
+
+      <footer class="footer">
+        Kargo Takip Sistemi © 2026
+      </footer>
+    </div>
+  </div>
+
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-card">
+      <div class="loading-badge">
+        <span class="dot"></span>
+        CANLI SORGULAMA
+      </div>
+
+      <h3>Kargonuz Sorgulanıyor</h3>
+      <p>
+        Takip numarası:
+        <span class="loading-number" id="loadingTrackingNo">-</span>
+      </p>
+
+      <div class="loading-visual">
+        <img src="anlik-takip.jpeg" alt="Kargo takip yükleniyor görseli">
+      </div>
+
+      <div class="loading-progress">
+        <div class="loading-progress-top">
+          <span>Sorgu İşleniyor</span>
+          <span>%100</span>
+        </div>
+
+        <div class="loading-progress-bar">
+          <div class="loading-progress-fill"></div>
+        </div>
+
+        <div class="loading-steps">
+          <div class="loading-step done">
+            <div class="loading-step-icon">
+              <i class="fa-solid fa-box"></i>
+            </div>
+            <span>Hazırlanıyor</span>
+          </div>
+
+          <div class="loading-step active">
+            <div class="loading-step-icon">
+              <i class="fa-solid fa-truck-fast"></i>
+            </div>
+            <span>Yolda</span>
+          </div>
+
+          <div class="loading-step">
+            <div class="loading-step-icon">
+              <i class="fa-solid fa-box-open"></i>
+            </div>
+            <span>Teslim Ediliyor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="loading-note">
+        Lütfen bekleyin, takip detay sayfasına yönlendiriliyorsunuz...
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const trackForm = document.getElementById("trackForm");
+    const kargoNoInput = document.getElementById("kargoNoInput");
+    const loadingOverlay = document.getElementById("loadingOverlay");
+    const loadingTrackingNo = document.getElementById("loadingTrackingNo");
+
+    trackForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const kargoNo = kargoNoInput.value.trim();
+
+      if (!kargoNo) {
+        alert("Lütfen takip numarası girin.");
+        return;
+      }
+
+      loadingTrackingNo.textContent = kargoNo;
+      loadingOverlay.classList.add("show");
+      document.body.classList.add("loading-active");
+
+      setTimeout(function () {
+        window.location.href = "takip-detay.html?kargoNo=" + encodeURIComponent(kargoNo);
+      }, 2500);
+    });
+  </script>
+</body>
+</html>
