@@ -30,7 +30,7 @@ CREATE TABLE Musteriler
     Eposta VARCHAR(100) NOT NULL UNIQUE,
     Adres VARCHAR(200) NOT NULL,
     Sehir VARCHAR(100) NOT NULL,
-    Ulke VARCHAR(100) NOT NULL DEFAULT 'Türkiye',
+    Ulke VARCHAR(100) NOT NULL DEFAULT 'Turkiye',
     KayitTarihi DATETIME NOT NULL DEFAULT GETDATE(),
     KullaniciID INT NULL,
     FOREIGN KEY (KullaniciID) REFERENCES Kullanicilar(KullaniciID)
@@ -65,13 +65,13 @@ CREATE TABLE Kuryeler
     Telefon VARCHAR(20) NOT NULL,
     SubeID INT NOT NULL,
     AracID INT NULL,
-    Durum VARCHAR(30) NOT NULL DEFAULT 'Müsait',
+    Durum VARCHAR(30) NOT NULL DEFAULT 'Musait',
     IseBaslamaTarihi DATE NULL,
     KullaniciID INT NULL,
     FOREIGN KEY (SubeID) REFERENCES Subeler(SubeID),
     FOREIGN KEY (AracID) REFERENCES Araclar(AracID),
     FOREIGN KEY (KullaniciID) REFERENCES Kullanicilar(KullaniciID),
-    CONSTRAINT CK_KuryeDurum CHECK (Durum IN ('Müsait', 'Daðýtýmda', 'Ýzinde', 'Pasif'))
+    CONSTRAINT CK_KuryeDurum CHECK (Durum IN ('Musait', 'Dagitimda', 'Izinde', 'Pasif'))
 );
 GO
 
@@ -83,7 +83,7 @@ CREATE TABLE Alicilar
     Eposta VARCHAR(100) NULL,
     Adres VARCHAR(200) NOT NULL,
     Sehir VARCHAR(100) NOT NULL,
-    Ulke VARCHAR(100) NOT NULL DEFAULT 'Türkiye'
+    Ulke VARCHAR(100) NOT NULL DEFAULT 'Turkiye'
 );
 GO
 
@@ -118,8 +118,8 @@ CREATE TABLE Gonderiler
     FOREIGN KEY (VarisSubeID) REFERENCES Subeler(SubeID),
     FOREIGN KEY (KuryeID) REFERENCES Kuryeler(KuryeID),
     FOREIGN KEY (Durum) REFERENCES GonderiDurumlari(DurumKodu),
-    CONSTRAINT CK_GonderiTipi CHECK (GonderiTipi IN ('Standart', 'Ekspres', 'Ayný Gün')),
-    CONSTRAINT CK_OdemeDurumu CHECK (OdemeDurumu IN ('Bekliyor', 'Ödendi', 'Ýade'))
+    CONSTRAINT CK_GonderiTipi CHECK (GonderiTipi IN ('Standart', 'Ekspres', 'Ayni Gun')),
+    CONSTRAINT CK_OdemeDurumu CHECK (OdemeDurumu IN ('Bekliyor', 'Odendi', 'Iade'))
 );
 GO
 
@@ -133,7 +133,7 @@ CREATE TABLE GonderiKalemleri
     BoyutCm VARCHAR(50) NULL,
     Desi DECIMAL(8,2) NULL,
     Adet INT NOT NULL DEFAULT 1,
-    KýrýlabilirMi BIT NOT NULL DEFAULT 0,
+    KurulabilirMi BIT NOT NULL DEFAULT 0,
     FOREIGN KEY (GonderiID) REFERENCES Gonderiler(GonderiID)
 );
 GO
@@ -160,7 +160,7 @@ CREATE TABLE Odemeler
     Yontem VARCHAR(30) NOT NULL,
     Tutar DECIMAL(10,2) NOT NULL,
     ParaBirimi VARCHAR(10) NOT NULL DEFAULT 'TRY',
-    OdemeDurumu VARCHAR(20) NOT NULL DEFAULT 'Baþarýlý',
+    OdemeDurumu VARCHAR(20) NOT NULL DEFAULT 'BasariLi',
     OdemeTarihi DATETIME NOT NULL DEFAULT GETDATE(),
     FOREIGN KEY (GonderiID) REFERENCES Gonderiler(GonderiID),
     CONSTRAINT CK_OdemeYontem CHECK (Yontem IN ('Nakit', 'Kart', 'Online'))
@@ -186,12 +186,10 @@ CREATE TABLE Iadeler
     GonderiID INT NOT NULL UNIQUE,
     IadeNedeni VARCHAR(200) NOT NULL,
     IadeTarihi DATETIME NOT NULL DEFAULT GETDATE(),
-    IadeDurumu VARCHAR(30) NOT NULL DEFAULT 'Ýþleniyor',
+    IadeDurumu VARCHAR(30) NOT NULL DEFAULT 'Isleniyor',
     FOREIGN KEY (GonderiID) REFERENCES Gonderiler(GonderiID)
 );
 GO
-
-
 
 INSERT INTO Roller VALUES
 (1, 'Admin'),
@@ -208,11 +206,11 @@ INSERT INTO Kullanicilar VALUES
 GO
 
 INSERT INTO Subeler VALUES
-(1, 'Ýstanbul Avcýlar Þube', 'Ýstanbul', 'Avcýlar Merkez Mah. 1', '02120000001', 1),
-(2, 'Ýstanbul Kadýköy Þube', 'Ýstanbul', 'Kadýköy Bahariye 22', '02120000002', 1),
-(3, 'Ýzmir Konak Þube', 'Ýzmir', 'Konak Kemeraltý 5', '02320000003', 1),
-(4, 'Ankara Çankaya Þube', 'Ankara', 'Çankaya Atakule 10', '03120000004', 1),
-(5, 'Bursa Nilüfer Þube', 'Bursa', 'Nilüfer FSM 18', '02240000005', 1);
+(1, 'Istanbul Avcilar Sube', 'Istanbul', 'Avcilar Merkez Mah. 1', '02120000001', 1),
+(2, 'Istanbul Kadikoy Sube', 'Istanbul', 'Kadikoy Bahariye 22', '02120000002', 1),
+(3, 'Izmir Konak Sube', 'Izmir', 'Konak Kemeralti 5', '02320000003', 1),
+(4, 'Ankara Cankaya Sube', 'Ankara', 'Cankaya Atakule 10', '03120000004', 1),
+(5, 'Bursa Nilufer Sube', 'Bursa', 'Nilufer FSM 18', '02240000005', 1);
 GO
 
 INSERT INTO Araclar VALUES
@@ -224,79 +222,77 @@ INSERT INTO Araclar VALUES
 GO
 
 INSERT INTO Musteriler VALUES
-(1, 'Ahmet Yýlmaz', '05001112233', 'ahmet.yilmaz@example.com', 'Marmara Cd. No:12', 'Ýstanbul', 'Türkiye', GETDATE(), 2),
-(2, 'Ayþe Demir', '05002223344', 'ayse.demir@example.com', 'Atatürk Mh. 45', 'Ýzmir', 'Türkiye', GETDATE(), 3),
-(3, 'Mehmet Kaya', '05003334455', 'mehmet.kaya@example.com', 'Çiðdem Sk. 8', 'Ankara', 'Türkiye', GETDATE(), NULL),
-(4, 'Fatma Þahin', '05004445566', 'fatma.sahin@example.com', 'Gül Sk. 20', 'Bursa', 'Türkiye', GETDATE(), NULL),
-(5, 'Ali Çelik', '05005556677', 'ali.celik@example.com', 'Papatya Cd. 3', 'Antalya', 'Türkiye', GETDATE(), NULL);
+(1, 'Ahmet Yilmaz', '05001112233', 'ahmet.yilmaz@example.com', 'Marmara Cd. No:12', 'Istanbul', 'Turkiye', GETDATE(), 2),
+(2, 'Ayse Demir', '05002223344', 'ayse.demir@example.com', 'Ataturk Mh. 45', 'Izmir', 'Turkiye', GETDATE(), 3),
+(3, 'Mehmet Kaya', '05003334455', 'mehmet.kaya@example.com', 'Cigdem Sk. 8', 'Ankara', 'Turkiye', GETDATE(), NULL),
+(4, 'Fatma Sahin', '05004445566', 'fatma.sahin@example.com', 'Gul Sk. 20', 'Bursa', 'Turkiye', GETDATE(), NULL),
+(5, 'Ali Celik', '05005556677', 'ali.celik@example.com', 'Papatya Cd. 3', 'Antalya', 'Turkiye', GETDATE(), NULL);
 GO
 
 INSERT INTO Kuryeler VALUES
-(1, 'Kerem Taþ', '05001231234', 1, 1, 'Müsait', '2024-01-10', 4),
-(2, 'Merve Ýnce', '05002342345', 1, 2, 'Daðýtýmda', '2024-02-15', 5),
-(3, 'Can Er', '05003453456', 3, 3, 'Müsait', '2024-03-12', NULL),
-(4, 'Selin Uz', '05004564567', 4, 4, 'Müsait', '2024-05-08', NULL),
-(5, 'Emre Tok', '05005675678', 5, 5, 'Ýzinde', '2024-06-20', NULL);
+(1, 'Kerem Tas', '05001231234', 1, 1, 'Musait', '2024-01-10', 4),
+(2, 'Merve Ince', '05002342345', 1, 2, 'Dagitimda', '2024-02-15', 5),
+(3, 'Can Er', '05003453456', 3, 3, 'Musait', '2024-03-12', NULL),
+(4, 'Selin Uz', '05004564567', 4, 4, 'Musait', '2024-05-08', NULL),
+(5, 'Emre Tok', '05005675678', 5, 5, 'Izinde', '2024-06-20', NULL);
 GO
 
 INSERT INTO Alicilar VALUES
-(1, 'Zehra Kaya', '05009998877', 'zehra.kaya@example.com', 'Baðdat Cad. 88', 'Ýstanbul', 'Türkiye'),
-(2, 'Murat Arslan', '05008887766', 'murat.arslan@example.com', 'Konak Meydaný 12', 'Ýzmir', 'Türkiye'),
-(3, 'Selma Yurt', '05007776655', 'selma.yurt@example.com', 'Kýzýlay Sok. 40', 'Ankara', 'Türkiye'),
-(4, 'Deniz Ak', '05006665544', 'deniz.ak@example.com', 'FSM Bulvarý 22', 'Bursa', 'Türkiye'),
-(5, 'Canan Öz', '05005554433', 'canan.oz@example.com', 'Lara Cd. 5', 'Antalya', 'Türkiye');
+(1, 'Zehra Kaya', '05009998877', 'zehra.kaya@example.com', 'Bagdat Cad. 88', 'Istanbul', 'Turkiye'),
+(2, 'Murat Arslan', '05008887766', 'murat.arslan@example.com', 'Konak Meydani 12', 'Izmir', 'Turkiye'),
+(3, 'Selma Yurt', '05007776655', 'selma.yurt@example.com', 'Kizilay Sok. 40', 'Ankara', 'Turkiye'),
+(4, 'Deniz Ak', '05006665544', 'deniz.ak@example.com', 'FSM Bulvari 22', 'Bursa', 'Turkiye'),
+(5, 'Canan Oz', '05005554433', 'canan.oz@example.com', 'Lara Cd. 5', 'Antalya', 'Turkiye');
 GO
 
 INSERT INTO GonderiDurumlari VALUES
-('Oluþturuldu', 'Gönderi kaydý oluþturuldu'),
-('Þubeye Ulaþtý', 'Gönderi ilgili þubeye ulaþtý'),
-('Yolda', 'Gönderi transfer sürecinde'),
-('Teslimatta', 'Gönderi daðýtýma çýktý'),
-('Teslim Edildi', 'Gönderi alýcýya teslim edildi'),
-('Ýade', 'Gönderi iade sürecine alýndý'),
-('Ýptal', 'Gönderi iptal edildi'),
-('Hata', 'Gönderi sürecinde hata oluþtu');
+('Olusturuldu', 'Gonderi kaydi olusturuldu'),
+('Subeye Ulasti', 'Gonderi ilgili subeye ulasti'),
+('Yolda', 'Gonderi transfer surecinde'),
+('Teslimatta', 'Gonderi dagitima cikti'),
+('Teslim Edildi', 'Gonderi aliciya teslim edildi'),
+('Iade', 'Gonderi iade surecine alindi'),
+('Iptal', 'Gonderi iptal edildi'),
+('Hata', 'Gonderi surecinde hata olustu');
 GO
 
 INSERT INTO Gonderiler VALUES
-(1, 'TRK0010001', 1, 1, 1, 2, 1, 'Oluþturuldu', 'Standart', 'Ödendi', 2.50, 0.60, '2025-12-01 09:00:00', '2025-12-03 18:00:00', NULL, NULL),
-(2, 'TRK0010002', 2, 2, 3, 1, 3, 'Yolda', 'Ekspres', 'Ödendi', 3.20, 0.70, '2025-12-01 10:00:00', '2025-12-02 18:00:00', NULL, NULL),
-(3, 'TRK0010003', 3, 3, 4, 5, 4, 'Teslimatta', 'Standart', 'Ödendi', 8.50, 1.60, '2025-12-02 08:30:00', '2025-12-03 20:00:00', NULL, NULL),
-(4, 'TRK0010004', 4, 4, 5, 4, 5, 'Teslim Edildi', 'Ayný Gün', 'Ödendi', 1.80, 0.30, '2025-12-02 09:00:00', '2025-12-02 23:00:00', '2025-12-03 14:15:00', 'Deniz Ak'),
+(1, 'TRK0010001', 1, 1, 1, 2, 1, 'Olusturuldu', 'Standart', 'Odendi', 2.50, 0.60, '2025-12-01 09:00:00', '2025-12-03 18:00:00', NULL, NULL),
+(2, 'TRK0010002', 2, 2, 3, 1, 3, 'Yolda', 'Ekspres', 'Odendi', 3.20, 0.70, '2025-12-01 10:00:00', '2025-12-02 18:00:00', NULL, NULL),
+(3, 'TRK0010003', 3, 3, 4, 5, 4, 'Teslimatta', 'Standart', 'Odendi', 8.50, 1.60, '2025-12-02 08:30:00', '2025-12-03 20:00:00', NULL, NULL),
+(4, 'TRK0010004', 4, 4, 5, 4, 5, 'Teslim Edildi', 'Ayni Gun', 'Odendi', 1.80, 0.30, '2025-12-02 09:00:00', '2025-12-02 23:00:00', '2025-12-03 14:15:00', 'Deniz Ak'),
 (5, 'TRK0010005', 5, 5, 2, 1, 2, 'Yolda', 'Standart', 'Bekliyor', 5.40, 1.10, '2025-12-03 11:00:00', '2025-12-05 18:00:00', NULL, NULL);
 GO
 
 INSERT INTO GonderiKalemleri VALUES
-(1, 1, 'URUN-001', 'Akýllý Telefon', 0.50, '15x8x5', 1.00, 1, 1),
-(2, 1, 'URUN-002', 'Telefon Kýlýfý', 0.10, '10x6x2', 0.50, 1, 0),
+(1, 1, 'URUN-001', 'Akilli Telefon', 0.50, '15x8x5', 1.00, 1, 1),
+(2, 1, 'URUN-002', 'Telefon Kilifi', 0.10, '10x6x2', 0.50, 1, 0),
 (3, 2, 'URUN-003', 'Kitap - Veri Bilimi', 0.70, '23x15x3', 1.20, 1, 0),
-(4, 3, 'URUN-004', 'Laptop 14 inç', 1.60, '35x25x3', 8.50, 1, 1),
-(5, 4, 'URUN-005', 'Kulaklýk', 0.30, '20x15x10', 1.80, 1, 0),
-(6, 5, 'URUN-006', 'Ayakkabý', 1.10, '30x20x12', 5.40, 1, 0);
+(4, 3, 'URUN-004', 'Laptop 14 inc', 1.60, '35x25x3', 8.50, 1, 1),
+(5, 4, 'URUN-005', 'Kulaklik', 0.30, '20x15x10', 1.80, 1, 0),
+(6, 5, 'URUN-006', 'Ayakkabi', 1.10, '30x20x12', 5.40, 1, 0);
 GO
 
 INSERT INTO TakipOlaylari VALUES
-(1, 1, '2025-12-01 09:05:00', 'Ýstanbul Avcýlar Þube', 'Oluþturuldu', 'Gönderi oluþturuldu', 1),
-(2, 2, '2025-12-01 10:10:00', 'Ýzmir Konak Þube', 'Oluþturuldu', 'Gönderi kaydý alýndý', 1),
-(3, 2, '2025-12-01 16:50:00', 'Ýstanbul Avcýlar Þube', 'Yolda', 'Araç transfer sürecinde', 1),
-(4, 3, '2025-12-02 08:40:00', 'Ankara Çankaya Þube', 'Teslimatta', 'Teslimata çýktý', 1),
-(5, 4, '2025-12-03 14:15:00', 'Bursa Nilüfer Þube', 'Teslim Edildi', 'Alýcýya teslim edildi', 1),
-(6, 5, '2025-12-03 11:05:00', 'Ýstanbul Kadýköy Þube', 'Yolda', 'Transfer baþladý', 1);
+(1, 1, '2025-12-01 09:05:00', 'Istanbul Avcilar Sube', 'Olusturuldu', 'Gonderi olusturuldu', 1),
+(2, 2, '2025-12-01 10:10:00', 'Izmir Konak Sube', 'Olusturuldu', 'Gonderi kaydi alindi', 1),
+(3, 2, '2025-12-01 16:50:00', 'Istanbul Avcilar Sube', 'Yolda', 'Arac transfer surecinde', 1),
+(4, 3, '2025-12-02 08:40:00', 'Ankara Cankaya Sube', 'Teslimatta', 'Teslimata cikti', 1),
+(5, 4, '2025-12-03 14:15:00', 'Bursa Nilufer Sube', 'Teslim Edildi', 'Aliciya teslim edildi', 1),
+(6, 5, '2025-12-03 11:05:00', 'Istanbul Kadikoy Sube', 'Yolda', 'Transfer basladi', 1);
 GO
 
 INSERT INTO Odemeler VALUES
-(1, 1, 'Online', 49.90, 'TRY', 'Baþarýlý', '2025-12-01 09:06:00'),
-(2, 2, 'Kart',   29.90, 'TRY', 'Baþarýlý', '2025-12-01 10:12:00'),
-(3, 3, 'Nakit',  39.90, 'TRY', 'Baþarýlý', '2025-12-02 08:45:00'),
-(4, 4, 'Online', 19.90, 'TRY', 'Baþarýlý', '2025-12-02 09:12:00'),
+(1, 1, 'Online', 49.90, 'TRY', 'BasariLi', '2025-12-01 09:06:00'),
+(2, 2, 'Kart',   29.90, 'TRY', 'BasariLi', '2025-12-01 10:12:00'),
+(3, 3, 'Nakit',  39.90, 'TRY', 'BasariLi', '2025-12-02 08:45:00'),
+(4, 4, 'Online', 19.90, 'TRY', 'BasariLi', '2025-12-02 09:12:00'),
 (5, 5, 'Kart',   34.90, 'TRY', 'Bekliyor', '2025-12-03 11:05:00');
 GO
 
 INSERT INTO Teslimatlar VALUES
 (1, 4, '2025-12-03 14:15:00', 'Deniz Ak', '12345678901', 'Sorunsuz teslim edildi', 1);
 GO
-
-
 
 CREATE VIEW vw_GonderiDetaylari
 AS
@@ -337,8 +333,6 @@ LEFT JOIN Araclar a ON k.AracID = a.AracID
 WHERE k.Durum <> 'Pasif';
 GO
 
-
-
 CREATE PROC sp_YeniMusteriEkle
     @MusteriID INT,
     @AdSoyad VARCHAR(100),
@@ -373,7 +367,7 @@ BEGIN
     VALUES
     (
         @GonderiID, @TakipNo, @MusteriID, @AliciID, @CikisSubeID, @VarisSubeID, @KuryeID,
-        'Oluþturuldu', @GonderiTipi, 'Bekliyor', GETDATE()
+        'Olusturuldu', @GonderiTipi, 'Bekliyor', GETDATE()
     );
 END;
 GO
@@ -395,7 +389,7 @@ BEGIN
         (SELECT ISNULL(MAX(OlayID), 0) + 1 FROM TakipOlaylari),
         @GonderiID,
         GETDATE(),
-        'Sistem Güncellemesi',
+        'Sistem Guncellemesi',
         @YeniDurum,
         @Notlar
     );
@@ -448,9 +442,9 @@ BEGIN
         (SELECT ISNULL(MAX(OlayID), 0) + 1 FROM TakipOlaylari),
         @GonderiID,
         GETDATE(),
-        'Þube Operasyonu',
-        'Oluþturuldu',
-        'Gönderi için kurye atamasý yapýldý'
+        'Sube Operasyonu',
+        'Olusturuldu',
+        'Gonderi icin kurye atamasi yapildi'
     );
 END;
 GO
@@ -468,11 +462,9 @@ BEGIN
     FROM Odemeler
     WHERE YEAR(OdemeTarihi) = @Yil
       AND MONTH(OdemeTarihi) = @Ay
-      AND OdemeDurumu = 'Baþarýlý';
+      AND OdemeDurumu = 'BasariLi';
 END;
 GO
-
-
 
 CREATE TRIGGER trg_GonderiOlusturuldu
 ON Gonderiler
@@ -484,9 +476,9 @@ BEGIN
         (SELECT ISNULL(MAX(OlayID), 0) FROM TakipOlaylari) + ROW_NUMBER() OVER (ORDER BY i.GonderiID),
         i.GonderiID,
         GETDATE(),
-        'Ýlk Kayýt',
+        'Ilk Kayit',
         i.Durum,
-        'Gönderi sisteme eklendi'
+        'Gonderi sisteme eklendi'
     FROM inserted i;
 END;
 GO
@@ -507,16 +499,215 @@ BEGIN
 END;
 GO
 
-
-
--- Tüm gönderi detaylarýný listele
 SELECT * FROM vw_GonderiDetaylari;
 GO
 
--- Þubeye göre aktif kurye listesi
 SELECT * FROM vw_AktifKuryeler;
 GO
 
--- Aralýk bazlý ödeme raporu
 EXEC sp_AylikGelirRaporu @Yil = 2025, @Ay = 12;
+GO
+
+    
+USE kargoKuryeYonetimi6;
+GO
+
+
+IF OBJECT_ID('dbo.TakipOlaylari', 'U') IS NOT NULL
+    DROP TABLE dbo.TakipOlaylari;
+GO
+
+IF OBJECT_ID('dbo.GonderiKalemleri', 'U') IS NOT NULL
+    DROP TABLE dbo.GonderiKalemleri;
+GO
+
+IF OBJECT_ID('dbo.Odemeler', 'U') IS NOT NULL
+    DROP TABLE dbo.Odemeler;
+GO
+
+IF OBJECT_ID('dbo.Teslimatlar', 'U') IS NOT NULL
+    DROP TABLE dbo.Teslimatlar;
+GO
+
+IF OBJECT_ID('dbo.Iadeler', 'U') IS NOT NULL
+    DROP TABLE dbo.Iadeler;
+GO
+
+IF OBJECT_ID('dbo.Gonderiler', 'U') IS NOT NULL
+    DROP TABLE dbo.Gonderiler;
+GO
+
+
+CREATE TABLE dbo.Gonderiler
+(
+    GonderiID INT IDENTITY(1,1) NOT NULL,
+    TakipNo VARCHAR(30) NOT NULL,
+    MusteriID INT NOT NULL,
+    AliciID INT NOT NULL,
+    CikisSubeID INT NOT NULL,
+    VarisSubeID INT NOT NULL,
+    KuryeID INT NULL,
+    Durum VARCHAR(30) NOT NULL,
+    GonderiTipi VARCHAR(30) NOT NULL
+        CONSTRAINT DF_Gonderiler_GonderiTipi DEFAULT ('Standart'),
+    OdemeDurumu VARCHAR(20) NOT NULL
+        CONSTRAINT DF_Gonderiler_OdemeDurumu DEFAULT ('Bekliyor'),
+    OlusturmaTarihi DATETIME NOT NULL
+        CONSTRAINT DF_Gonderiler_OlusturmaTarihi DEFAULT (GETDATE()),
+    TahminiTeslimTarihi DATETIME NULL,
+    TeslimTarihi DATETIME NULL,
+    TeslimAlan VARCHAR(100) NULL,
+    ToplamAgirlikKg DECIMAL(8,2) NULL,
+    ToplamDesi DECIMAL(8,2) NULL,
+
+    CONSTRAINT PK_Gonderiler PRIMARY KEY (GonderiID),
+    CONSTRAINT UQ_Gonderiler_TakipNo UNIQUE (TakipNo)
+);
+GO
+
+ALTER TABLE dbo.Gonderiler
+ADD CONSTRAINT FK_Gonderiler_Musteriler
+FOREIGN KEY (MusteriID) REFERENCES dbo.Musteriler(MusteriID);
+GO
+
+ALTER TABLE dbo.Gonderiler
+ADD CONSTRAINT FK_Gonderiler_Alicilar
+FOREIGN KEY (AliciID) REFERENCES dbo.Alicilar(AliciID);
+GO
+
+ALTER TABLE dbo.Gonderiler
+ADD CONSTRAINT FK_Gonderiler_Subeler_Cikis
+FOREIGN KEY (CikisSubeID) REFERENCES dbo.Subeler(SubeID);
+GO
+
+ALTER TABLE dbo.Gonderiler
+ADD CONSTRAINT FK_Gonderiler_Subeler_Varis
+FOREIGN KEY (VarisSubeID) REFERENCES dbo.Subeler(SubeID);
+GO
+
+ALTER TABLE dbo.Gonderiler
+ADD CONSTRAINT FK_Gonderiler_Kuryeler
+FOREIGN KEY (KuryeID) REFERENCES dbo.Kuryeler(KuryeID);
+GO
+
+ALTER TABLE dbo.Gonderiler
+ADD CONSTRAINT FK_Gonderiler_GonderiDurumlari
+FOREIGN KEY (Durum) REFERENCES dbo.GonderiDurumlari(DurumKodu);
+GO
+
+
+
+CREATE TABLE dbo.TakipOlaylari
+(
+    OlayID INT IDENTITY(1,1) NOT NULL,
+    GonderiID INT NOT NULL,
+    Durum VARCHAR(30) NOT NULL,
+    Notlar VARCHAR(200) NULL,
+    Konum VARCHAR(100) NULL,
+    OlayZamani DATETIME NOT NULL
+        CONSTRAINT DF_TakipOlaylari_OlayZamani DEFAULT (GETDATE()),
+    IslemYapanKullaniciID INT NULL,
+
+    CONSTRAINT PK_TakipOlaylari PRIMARY KEY (OlayID)
+);
+GO
+
+
+
+ALTER TABLE dbo.TakipOlaylari
+ADD CONSTRAINT FK_TakipOlaylari_Gonderiler
+FOREIGN KEY (GonderiID) REFERENCES dbo.Gonderiler(GonderiID);
+GO
+
+ALTER TABLE dbo.TakipOlaylari
+ADD CONSTRAINT FK_TakipOlaylari_GonderiDurumlari
+FOREIGN KEY (Durum) REFERENCES dbo.GonderiDurumlari(DurumKodu);
+GO
+
+ALTER TABLE dbo.TakipOlaylari
+ADD CONSTRAINT FK_TakipOlaylari_Kullanicilar
+FOREIGN KEY (IslemYapanKullaniciID) REFERENCES dbo.Kullanicilar(KullaniciID);
+GO
+
+
+
+CREATE TABLE dbo.GonderiKalemleri
+(
+    KalemID INT NOT NULL,
+    GonderiID INT NOT NULL,
+    UrunKodu VARCHAR(50) NULL,
+    Aciklama VARCHAR(200) NULL,
+    Adet INT NULL CONSTRAINT DF_GonderiKalemleri_Adet DEFAULT (1),
+    AgirlikKg DECIMAL(6,2) NULL,
+    BoyutCm VARCHAR(50) NULL,
+    Desi DECIMAL(8,2) NULL,
+
+    CONSTRAINT PK_GonderiKalemleri PRIMARY KEY (KalemID),
+    CONSTRAINT FK_GonderiKalemleri_Gonderiler
+        FOREIGN KEY (GonderiID) REFERENCES dbo.Gonderiler(GonderiID)
+);
+GO
+
+CREATE TABLE dbo.Odemeler
+(
+    OdemeID INT NOT NULL,
+    GonderiID INT NOT NULL,
+    Tutar DECIMAL(10,2) NULL,
+    ParaBirimi VARCHAR(10) NULL
+        CONSTRAINT DF_Odemeler_ParaBirimi DEFAULT ('TRY'),
+    Yontem VARCHAR(30) NULL,
+    OdemeDurumu VARCHAR(20) NULL
+        CONSTRAINT DF_Odemeler_OdemeDurumu DEFAULT ('BasariLi'),
+    OdemeTarihi DATETIME NULL
+        CONSTRAINT DF_Odemeler_OdemeTarihi DEFAULT (GETDATE()),
+
+    CONSTRAINT PK_Odemeler PRIMARY KEY (OdemeID),
+    CONSTRAINT FK_Odemeler_Gonderiler
+        FOREIGN KEY (GonderiID) REFERENCES dbo.Gonderiler(GonderiID)
+);
+GO
+
+CREATE TABLE dbo.Teslimatlar
+(
+    TeslimatID INT NOT NULL,
+    GonderiID INT NOT NULL,
+    TeslimAlanAdSoyad VARCHAR(100) NULL,
+    TeslimAlanKimlikNo VARCHAR(20) NULL,
+    TeslimatTarihi DATETIME NULL,
+    Aciklama VARCHAR(200) NULL,
+
+    CONSTRAINT PK_Teslimatlar PRIMARY KEY (TeslimatID),
+    CONSTRAINT UQ_Teslimatlar_GonderiID UNIQUE (GonderiID),
+    CONSTRAINT FK_Teslimatlar_Gonderiler
+        FOREIGN KEY (GonderiID) REFERENCES dbo.Gonderiler(GonderiID)
+);
+GO
+
+CREATE TABLE dbo.Iadeler
+(
+    IadeID INT NOT NULL,
+    GonderiID INT NOT NULL,
+    IadeNedeni VARCHAR(200) NULL,
+    IadeDurumu VARCHAR(30) NULL
+        CONSTRAINT DF_Iadeler_IadeDurumu DEFAULT ('Isleniyor'),
+    IadeTarihi DATETIME NULL
+        CONSTRAINT DF_Iadeler_IadeTarihi DEFAULT (GETDATE()),
+
+    CONSTRAINT PK_Iadeler PRIMARY KEY (IadeID),
+    CONSTRAINT UQ_Iadeler_GonderiID UNIQUE (GonderiID),
+    CONSTRAINT FK_Iadeler_Gonderiler
+        FOREIGN KEY (GonderiID) REFERENCES dbo.Gonderiler(GonderiID)
+);
+GO
+
+
+
+SELECT 
+    t.name AS TableName,
+    c.name AS ColumnName,
+    c.is_identity
+FROM sys.columns c
+JOIN sys.tables t ON c.object_id = t.object_id
+WHERE t.name IN ('Gonderiler', 'TakipOlaylari')
+  AND c.name IN ('GonderiID', 'OlayID');
 GO
