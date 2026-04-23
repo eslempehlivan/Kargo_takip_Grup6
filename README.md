@@ -32,3 +32,18 @@ Sistem sayesinde kargolar gerçek zamanlı takip edilir, hareket geçmişi kayı
 | **2. Hafta** | Kargo takip sistemi | • Kargo sorgulama ekranı<br>• Takip numarası ile veri çekme<br>• Sonuç ekranı (durum, gönderici/alıcı)<br>• Hata mesajları |
 | **3. Hafta** | Admin ve geçmiş sistemi | • Admin giriş ekranı<br>• Yetkilendirme sistemi<br>• Kargo geçmişi (timeline/tablo)<br>• Kargo durum güncelleme |
 | **4. Hafta** | Tamamlama, geliştirme ve test | • Admin panel (kargo ekleme, listeleme)<br>• API testleri<br>• Hata düzeltmeleri<br>• Tüm sistem test edildi<br>• Proje final hali |
+
+---
+https://kargotakipgrup6-production.up.railway.app
+----
+## Ekip Üyeleri
+| İsim Soyisim |
+|-------------|
+|  Eslem Ceren Pehlivan |
+|  Ebrar Didem Kurul |
+|  Nehir Kurtaran  |
+|  Edanur Atlı  |
+|  Miray Rukiye Şahin |
+|  Zuhal Zehra Mustafaoğlu |
+|  Gulsenem Hamzayeva |
+|  Atakan Avcı |
