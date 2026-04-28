@@ -42,7 +42,7 @@ https://kargotakipgrup6-production.up.railway.app
 |  Eslem Ceren Pehlivan |
 |  Ebrar Didem Kurul |
 |  Nehir Kurtaran  |
-|  Edanur Atlı  |
+|  Eda Tabakçı  |
 |  Miray Rukiye Şahin |
 |  Zuhal Zehra Mustafaoğlu |
 |  Gulsenem Hamzayeva |
